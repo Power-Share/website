@@ -1,0 +1,71 @@
+/*
+ * Power Share FlexCo — Design Tokens as CSS Custom Properties
+ * Import this file in any project to get the full color system.
+ */
+
+:root {
+  /* ─── Brand Colors ─── */
+  --ps-teal:          #0ABAB5;
+  --ps-teal-light:    #3DD4CF;
+  --ps-teal-dark:     #089E9A;
+  --ps-amber:         #F5A623;
+  --ps-amber-light:   #FFBF4A;
+  --ps-green:         #34C759;
+  --ps-coral:         #FF6B6B;
+  --ps-navy:          #1A2332;
+  --ps-navy-light:    #243044;
+
+  /* ─── Light Mode (default) ─── */
+  --ps-bg-primary:    #FFFFFF;
+  --ps-bg-secondary:  #F8FAFB;
+  --ps-bg-surface:    #FFFFFF;
+  --ps-text-primary:  #111827;
+  --ps-text-secondary:#4B5563;
+  --ps-text-muted:    #9CA3AF;
+  --ps-border:        #E5E7EB;
+
+  /* ─── Typography ─── */
+  --ps-font-sans:     'Inter', system-ui, -apple-system, sans-serif;
+  --ps-font-mono:     'JetBrains Mono', 'Fira Code', monospace;
+
+  /* ─── Spacing ─── */
+  --ps-radius-sm:     0.5rem;
+  --ps-radius-md:     0.75rem;
+  --ps-radius-lg:     1rem;
+  --ps-radius-xl:     1.5rem;
+  --ps-radius-full:   9999px;
+
+  /* ─── Shadows ─── */
+  --ps-shadow-sm:     0 1px 2px 0 rgba(0,0,0,0.05);
+  --ps-shadow-md:     0 4px 6px -1px rgba(0,0,0,0.1);
+  --ps-shadow-lg:     0 10px 15px -3px rgba(0,0,0,0.1);
+  --ps-shadow-glow:   0 8px 24px rgba(10,186,181,0.2);
+}
+
+/* ─── Dark Mode ─── */
+.dark,
+[data-theme="dark"] {
+  --ps-bg-primary:    #0F1219;
+  --ps-bg-secondary:  #161B26;
+  --ps-bg-surface:    #1A2332;
+  --ps-text-primary:  #F3F4F6;
+  --ps-text-secondary:#D1D5DB;
+  --ps-text-muted:    #6B7280;
+  --ps-border:        rgba(255,255,255,0.1);
+
+  --ps-shadow-sm:     0 1px 2px 0 rgba(0,0,0,0.2);
+  --ps-shadow-md:     0 4px 6px -1px rgba(0,0,0,0.3);
+  --ps-shadow-lg:     0 10px 15px -3px rgba(0,0,0,0.4);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not(.light):not([data-theme="light"]) {
+    --ps-bg-primary:    #0F1219;
+    --ps-bg-secondary:  #161B26;
+    --ps-bg-surface:    #1A2332;
+    --ps-text-primary:  #F3F4F6;
+    --ps-text-secondary:#D1D5DB;
+    --ps-text-muted:    #6B7280;
+    --ps-border:        rgba(255,255,255,0.1);
+  }
+}

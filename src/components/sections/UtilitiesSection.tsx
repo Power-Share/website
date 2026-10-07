@@ -1,33 +1,7 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { Clock, Radio, CheckCircle, Layers } from 'lucide-react';
-
-const capabilities = [
-  {
-    icon: Clock,
-    title: '24h Rolling Forecasts',
-    description:
-      'Asset-level and portfolio-level flexibility forecasts, continuously updated with weather and load pattern data.',
-  },
-  {
-    icon: Radio,
-    title: 'Autonomous Dispatch',
-    description:
-      'KERN selects assets, executes dispatch, and autonomously rebalances before deviations become critical.',
-  },
-  {
-    icon: CheckCircle,
-    title: 'Real-Time Confirmation',
-    description:
-      'Every dispatch confirmed at asset level. Continuous comparison of actual state against bid commitments.',
-  },
-  {
-    icon: Layers,
-    title: 'Fleet Management',
-    description:
-      'Mixed portfolios of PV, batteries, heat pumps, and EV chargers — managed as one coherent fleet.',
-  },
-];
+import { useLanguage } from '../../i18n/LanguageContext';
 
 const codeSnippet = `{
   "dispatch_id": "dsp_7x9k2m",
@@ -45,6 +19,30 @@ const codeSnippet = `{
 export function UtilitiesSection() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: '-100px' });
+  const { t } = useLanguage();
+
+  const capabilities = [
+    {
+      icon: Clock,
+      title: t('utilities.cap1.title'),
+      description: t('utilities.cap1.desc'),
+    },
+    {
+      icon: Radio,
+      title: t('utilities.cap2.title'),
+      description: t('utilities.cap2.desc'),
+    },
+    {
+      icon: CheckCircle,
+      title: t('utilities.cap3.title'),
+      description: t('utilities.cap3.desc'),
+    },
+    {
+      icon: Layers,
+      title: t('utilities.cap4.title'),
+      description: t('utilities.cap4.desc'),
+    },
+  ];
 
   return (
     <section id="utilities" className="py-24 bg-navy" ref={ref}>
@@ -55,17 +53,17 @@ export function UtilitiesSection() {
           className="text-center mb-16"
         >
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            For Utilities & Aggregators
+            {t('utilities.title')}
           </h2>
           <p className="text-xl text-teal font-medium">
-            Confirmed flexibility, not promises.
+            {t('utilities.subtitle')}
           </p>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
           {capabilities.map((cap, i) => (
             <motion.div
-              key={cap.title}
+              key={i}
               initial={{ opacity: 0, y: 30 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: i * 0.1 }}
@@ -105,7 +103,7 @@ export function UtilitiesSection() {
             href="#contact"
             className="inline-flex border-2 border-teal text-teal px-8 py-3 rounded-full font-semibold hover:bg-teal hover:text-white transition-colors"
           >
-            Schedule a technical demo
+            {t('utilities.cta')}
           </a>
         </motion.div>
       </div>

@@ -1,12 +1,6 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef, useState, useEffect } from 'react';
-
-const stats = [
-  { value: 2400, suffix: '+', label: 'Homes Connected' },
-  { value: 12.5, suffix: ' MWh', label: 'Shared Today', decimals: 1 },
-  { value: 3.2, suffix: 't', label: 'CO₂ Avoided', decimals: 1 },
-  { value: 47000, prefix: '€', label: 'Community Earnings' },
-];
+import { useLanguage } from '../../i18n/LanguageContext';
 
 function CountUp({ target, decimals = 0, prefix = '', suffix = '' }: {
   target: number;
@@ -43,13 +37,22 @@ function CountUp({ target, decimals = 0, prefix = '', suffix = '' }: {
 }
 
 export function StatsSection() {
+  const { t } = useLanguage();
+
+  const stats = [
+    { value: 15, suffix: ' min', label: t('stats.setupTime') },
+    { value: 12.5, suffix: ' MWh', label: t('stats.sharedToday'), decimals: 1 },
+    { value: 3.2, suffix: 't', label: t('stats.co2Avoided'), decimals: 1 },
+    { value: 47000, prefix: '€', label: t('stats.communityEarnings') },
+  ];
+
   return (
     <section className="bg-teal py-16">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
           {stats.map((stat, i) => (
             <motion.div
-              key={stat.label}
+              key={i}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}

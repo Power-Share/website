@@ -1,128 +1,306 @@
-import { motion } from 'framer-motion';
-import { ChevronDown } from 'lucide-react';
+"use client";
 
-function EnergyNetwork() {
-  const houses = [
-    { x: 150, y: 120 },
-    { x: 380, y: 80 },
-    { x: 600, y: 130 },
-    { x: 250, y: 280 },
-    { x: 500, y: 260 },
-    { x: 720, y: 300 },
-  ];
+import { motion } from "framer-motion";
+import { ArrowRight } from "lucide-react";
+import { useLanguage } from '../../i18n/LanguageContext';
 
-  const connections = [
-    [0, 1], [1, 2], [0, 3], [1, 4], [2, 5], [3, 4], [4, 5],
-  ];
+function DashboardPreview() {
+  const { t } = useLanguage();
+
+  // SVG area chart data points (6am to 6pm, 13 hours)
+  const chartWidth = 280;
+  const chartHeight = 120;
+  const hours = [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18];
+
+  // Production curve (solar bell curve)
+  const production = [0, 0.3, 1.2, 2.8, 3.8, 4.2, 4.5, 4.3, 3.6, 2.4, 1.1, 0.3, 0];
+  // Consumption curve (more flat with morning/evening peaks)
+  const consumption = [1.2, 1.8, 2.2, 1.6, 1.4, 1.5, 2.0, 1.8, 1.6, 2.0, 2.4, 2.8, 2.2];
+
+  const maxVal = 5;
+  const xScale = (i: number) => (i / (hours.length - 1)) * chartWidth;
+  const yScale = (v: number) => chartHeight - (v / maxVal) * chartHeight;
+
+  const productionPoints = production.map((v, i) => `${xScale(i)},${yScale(v)}`).join(" ");
+  const consumptionPoints = consumption.map((v, i) => `${xScale(i)},${yScale(v)}`).join(" ");
+
+  // Area fill path for production
+  const productionAreaPath = `M0,${chartHeight} ` +
+    production.map((v, i) => `L${xScale(i)},${yScale(v)}`).join(" ") +
+    ` L${chartWidth},${chartHeight} Z`;
 
   return (
-    <svg
-      viewBox="0 0 900 400"
-      className="absolute inset-0 w-full h-full opacity-20"
-      fill="none"
+    <motion.div
+      initial={{ opacity: 0, x: 80, rotate: 4 }}
+      animate={{ opacity: 1, x: 0, rotate: 2 }}
+      transition={{ duration: 0.9, delay: 0.3, ease: "easeOut" }}
+      className="relative w-full max-w-sm mx-auto lg:mx-0"
     >
-      {connections.map(([a, b], i) => (
-        <motion.line
-          key={i}
-          x1={houses[a].x}
-          y1={houses[a].y}
-          x2={houses[b].x}
-          y2={houses[b].y}
-          stroke="#0ABAB5"
-          strokeWidth="1.5"
-          strokeDasharray="8 4"
-          initial={{ pathLength: 0 }}
-          animate={{ pathLength: 1, strokeDashoffset: [0, -40] }}
-          transition={{
-            pathLength: { duration: 2, delay: i * 0.2 },
-            strokeDashoffset: { duration: 2, repeat: Infinity, ease: 'linear', delay: i * 0.2 },
-          }}
-        />
-      ))}
-      {houses.map((h, i) => (
-        <g key={i}>
-          <motion.path
-            d={`M${h.x - 14} ${h.y + 4} L${h.x} ${h.y - 12} L${h.x + 14} ${h.y + 4} L${h.x + 14} ${h.y + 16} L${h.x - 14} ${h.y + 16}Z`}
-            stroke="#0ABAB5"
-            strokeWidth="1.5"
-            fill="#0ABAB5"
-            fillOpacity="0.15"
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.5 + i * 0.15, duration: 0.5 }}
-          />
-          <motion.circle
-            cx={h.x}
-            cy={h.y + 2}
-            r="3"
-            fill="#0ABAB5"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: [0.3, 1, 0.3] }}
-            transition={{ delay: 1 + i * 0.2, duration: 2, repeat: Infinity }}
-          />
-        </g>
-      ))}
-    </svg>
+      {/* Glow behind the card */}
+      <div className="absolute -inset-4 bg-teal/10 rounded-3xl blur-2xl" />
+
+      {/* Dashboard card */}
+      <div className="relative bg-navy rounded-2xl shadow-2xl overflow-hidden p-5 text-white">
+        {/* Header */}
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <p className="text-xs text-white/50 uppercase tracking-wider">{t('hero.dashboard.yourHome')}</p>
+            <p className="text-xs text-white/40 mt-0.5">Today, 14:32</p>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <span className="w-2 h-2 rounded-full bg-green animate-energy-pulse" />
+            <span className="text-xs text-green font-medium">{t('hero.dashboard.live')}</span>
+          </div>
+        </div>
+
+        {/* Chart */}
+        <div className="bg-navy-light rounded-xl p-3 mb-4">
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-[10px] text-white/40 font-medium">{t('hero.dashboard.energyToday')}</p>
+            <div className="flex items-center gap-3">
+              <span className="flex items-center gap-1">
+                <span className="w-2 h-0.5 bg-amber rounded-full inline-block" />
+                <span className="text-[9px] text-white/40">{t('hero.dashboard.production')}</span>
+              </span>
+              <span className="flex items-center gap-1">
+                <span className="w-2 h-0.5 bg-teal rounded-full inline-block" />
+                <span className="text-[9px] text-white/40">{t('hero.dashboard.consumption')}</span>
+              </span>
+            </div>
+          </div>
+
+          <svg viewBox={`-10 -5 ${chartWidth + 20} ${chartHeight + 25}`} className="w-full">
+            {/* Grid lines */}
+            {[0, 1, 2, 3, 4].map((i) => (
+              <line
+                key={i}
+                x1={0}
+                y1={yScale(i + 1)}
+                x2={chartWidth}
+                y2={yScale(i + 1)}
+                stroke="rgba(255,255,255,0.06)"
+                strokeWidth="0.5"
+              />
+            ))}
+
+            {/* Production area fill */}
+            <motion.path
+              d={productionAreaPath}
+              fill="url(#productionGradient)"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1, delay: 0.8 }}
+            />
+
+            {/* Production line */}
+            <motion.polyline
+              points={productionPoints}
+              fill="none"
+              stroke="#F5A623"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              initial={{ pathLength: 0, opacity: 0 }}
+              animate={{ pathLength: 1, opacity: 1 }}
+              transition={{ duration: 1.2, delay: 0.6 }}
+            />
+
+            {/* Consumption line */}
+            <motion.polyline
+              points={consumptionPoints}
+              fill="none"
+              stroke="#0ABAB5"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeDasharray="4 2"
+              initial={{ pathLength: 0, opacity: 0 }}
+              animate={{ pathLength: 1, opacity: 1 }}
+              transition={{ duration: 1.2, delay: 0.8 }}
+            />
+
+            {/* Gradient definition */}
+            <defs>
+              <linearGradient id="productionGradient" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#F5A623" stopOpacity="0.3" />
+                <stop offset="100%" stopColor="#F5A623" stopOpacity="0.02" />
+              </linearGradient>
+            </defs>
+
+            {/* X-axis labels */}
+            {[0, 3, 6, 9, 12].map((i) => (
+              <text
+                key={i}
+                x={xScale(i)}
+                y={chartHeight + 14}
+                textAnchor="middle"
+                fill="rgba(255,255,255,0.3)"
+                fontSize="8"
+              >
+                {hours[i]}:00
+              </text>
+            ))}
+          </svg>
+        </div>
+
+        {/* Stat pills */}
+        <motion.div
+          className="grid grid-cols-3 gap-2 mb-4"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 1.2 }}
+        >
+          <div className="bg-navy-light rounded-lg px-2.5 py-2 text-center">
+            <p className="text-[10px] text-white/40 mb-0.5">{t('hero.dashboard.generated')}</p>
+            <p className="text-sm font-semibold text-amber">
+              <span className="mr-0.5">☀</span>4.2 kWh
+            </p>
+          </div>
+          <div className="bg-navy-light rounded-lg px-2.5 py-2 text-center">
+            <p className="text-[10px] text-white/40 mb-0.5">{t('hero.dashboard.battery')}</p>
+            <p className="text-sm font-semibold text-green">
+              <span className="mr-0.5">🔋</span>87%
+            </p>
+          </div>
+          <div className="bg-navy-light rounded-lg px-2.5 py-2 text-center">
+            <p className="text-[10px] text-white/40 mb-0.5">{t('hero.dashboard.shared')}</p>
+            <p className="text-sm font-semibold text-teal-light">
+              <span className="mr-0.5">↗</span>1.8 kWh
+            </p>
+          </div>
+        </motion.div>
+
+        {/* Community rank */}
+        <motion.div
+          className="text-center"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 1.4 }}
+        >
+          <p className="text-[11px] text-white/30">
+            {t('hero.dashboard.communityRank')} <span className="text-teal-light font-medium">#12</span> of 48 homes
+          </p>
+        </motion.div>
+      </div>
+    </motion.div>
   );
 }
 
+
+const partnerLogos = [
+  "Wien Energie",
+  "E-Control",
+  "GridX",
+  "Verbund",
+];
+
 export function HeroSection() {
+  const { t } = useLanguage();
+
   return (
-    <section className="relative min-h-screen flex items-center justify-center bg-navy overflow-hidden">
-      <EnergyNetwork />
+    <section className="relative bg-white dark:bg-bg-primary overflow-hidden">
+      {/* Main hero area */}
+      <div className="relative min-h-screen flex items-center">
+        {/* Subtle background decoration */}
+        <div className="absolute top-0 right-0 w-1/2 h-full bg-cloud/60 dark:bg-navy-light/30 hidden lg:block" />
 
-      <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
-        <motion.h1
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-5xl md:text-7xl font-bold text-white leading-tight mb-6"
-        >
-          Your energy.{' '}
-          <span className="text-teal">Visible.</span>{' '}
-          <span className="text-teal-light">Shared.</span>{' '}
-          <span className="text-amber">Valued.</span>
-        </motion.h1>
+        <div className="w-full max-w-7xl mx-auto px-6 lg:px-12 py-20 lg:py-0">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            {/* Left side — text content */}
+            <div className="relative z-10">
+              {/* Badge */}
+              <motion.div
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                <span className="inline-flex items-center px-4 py-1.5 rounded-full bg-teal/10 text-teal text-sm font-medium">
+                  {t('hero.badge')}
+                </span>
+              </motion.div>
 
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          className="text-lg md:text-xl text-white/70 max-w-2xl mx-auto mb-10"
-        >
-          Power Share FlexCo turns your home into an active participant in the
-          energy transition. See what you generate, share your flexibility, earn
-          from it.
-        </motion.p>
+              {/* Headline */}
+              <motion.h1
+                className="mt-6 text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white leading-[1.1] tracking-tight"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.15 }}
+              >
+                {t('hero.title1')} <span className="text-teal">{t('hero.titleHighlight')}</span>.
+                <br />
+                {t('hero.title2')}
+              </motion.h1>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
-          className="flex flex-col sm:flex-row gap-4 justify-center"
-        >
-          <a
-            href="#how-it-works"
-            className="border-2 border-white/30 text-white px-8 py-3 rounded-full font-semibold hover:border-white/60 transition-colors"
-          >
-            See how it works
-          </a>
-          <a
-            href="#contact"
-            className="bg-teal text-white px-8 py-3 rounded-full font-semibold hover:bg-teal-dark transition-colors"
-          >
-            Get Started
-          </a>
-        </motion.div>
+              {/* Subtitle */}
+              <motion.p
+                className="mt-5 text-lg text-gray-600 dark:text-gray-300 max-w-lg leading-relaxed"
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+              >
+                {t('hero.subtitle')}
+              </motion.p>
+
+              {/* Buttons */}
+              <motion.div
+                className="mt-8 flex flex-wrap items-center gap-4"
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.45 }}
+              >
+                <a
+                  href="#contact"
+                  className="inline-flex items-center px-7 py-3 bg-teal text-white font-semibold rounded-full hover:bg-teal-dark transition-colors shadow-lg shadow-teal/20"
+                >
+                  {t('hero.cta1')}
+                </a>
+                <a
+                  href="#how-it-works"
+                  className="inline-flex items-center gap-1.5 text-gray-700 dark:text-gray-300 font-medium hover:text-teal transition-colors group"
+                >
+                  {t('hero.cta2')}
+                  <ArrowRight
+                    size={16}
+                    className="group-hover:translate-x-0.5 transition-transform"
+                  />
+                </a>
+              </motion.div>
+
+            </div>
+
+            {/* Right side — dashboard preview */}
+            <div className="relative z-10 flex justify-center lg:justify-end">
+              <DashboardPreview />
+            </div>
+          </div>
+        </div>
       </div>
 
-      <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2"
-        animate={{ y: [0, 10, 0] }}
-        transition={{ duration: 2, repeat: Infinity }}
-      >
-        <ChevronDown className="text-white/40" size={28} />
-      </motion.div>
+      {/* Partner logos strip */}
+      <div className="relative bg-gray-50 dark:bg-navy border-t border-gray-100 dark:border-white/10">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12 py-6">
+          <motion.div
+            className="flex flex-wrap items-center justify-center gap-x-2 gap-y-3"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 1.2 }}
+          >
+            <span className="text-sm text-gray-400 dark:text-gray-500 mr-4">{t('hero.partners')}</span>
+            {partnerLogos.map((name, i) => (
+              <span key={name} className="flex items-center">
+                {i > 0 && (
+                  <span className="text-gray-300 dark:text-gray-600 mx-3 hidden sm:inline">
+                    ·
+                  </span>
+                )}
+                <span className="text-sm font-medium text-gray-400 dark:text-gray-500 tracking-wide">
+                  {name}
+                </span>
+              </span>
+            ))}
+          </motion.div>
+        </div>
+      </div>
     </section>
   );
 }

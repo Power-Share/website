@@ -1,15 +1,7 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { Check } from 'lucide-react';
-
-const features = [
-  'Pool solar generation across members',
-  'Fair allocation of shared energy',
-  'Community-wide flexibility calendar',
-  'Transparent earnings distribution',
-  'Real-time community dashboard',
-  'Automated regulatory compliance',
-];
+import { useLanguage } from '../../i18n/LanguageContext';
 
 function DashboardMockup() {
   return (
@@ -58,24 +50,34 @@ function DashboardMockup() {
 export function CommunitySection() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: '-100px' });
+  const { t } = useLanguage();
+
+  const features = [
+    t('community.feature1'),
+    t('community.feature2'),
+    t('community.feature3'),
+    t('community.feature4'),
+    t('community.feature5'),
+    t('community.feature6'),
+  ];
 
   return (
-    <section id="communities" className="py-24 bg-cloud" ref={ref}>
+    <section id="communities" className="py-24 bg-cloud dark:bg-bg-secondary" ref={ref}>
       <div className="max-w-7xl mx-auto px-6">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          className="text-3xl md:text-4xl font-bold text-navy text-center mb-4"
+          className="text-3xl md:text-4xl font-bold text-navy dark:text-white text-center mb-4"
         >
-          Built for energy communities
+          {t('community.title')}
         </motion.h2>
         <motion.p
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
           transition={{ delay: 0.2 }}
-          className="text-gray-500 text-center mb-16 max-w-lg mx-auto"
+          className="text-gray-500 dark:text-gray-400 text-center mb-16 max-w-lg mx-auto"
         >
-          Pool your neighborhood's energy. Share surplus. Earn together.
+          {t('community.subtitle')}
         </motion.p>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -90,7 +92,7 @@ export function CommunitySection() {
                   <div className="w-6 h-6 rounded-full bg-teal/10 flex items-center justify-center flex-shrink-0 mt-0.5">
                     <Check className="text-teal" size={14} />
                   </div>
-                  <span className="text-gray-700">{feature}</span>
+                  <span className="text-gray-700 dark:text-gray-300">{feature}</span>
                 </li>
               ))}
             </ul>
@@ -98,7 +100,7 @@ export function CommunitySection() {
               href="#contact"
               className="inline-flex bg-teal text-white px-6 py-3 rounded-full font-semibold hover:bg-teal-dark transition-colors"
             >
-              Start your community
+              {t('community.cta')}
             </a>
           </motion.div>
 
