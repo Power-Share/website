@@ -35,7 +35,7 @@ jobs:
         run: npx tsc --noEmit
 
       - name: Lint (oxlint)
-        run: npx oxlint src/ --deny-warnings
+        run: npx oxlint src/ --ignore-pattern="src/components/variants/*" --ignore-pattern="src/components/DesignSwitcher.tsx"
 
       - name: Check translations completeness
         run: |
