@@ -1,0 +1,71 @@
+name: Build, Validate & Deploy
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build-and-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type check
+        run: npx tsc --noEmit
+
+      - name: Lint
+        run: npx eslint src/ --ext .ts,.tsx --max-warnings 0
+        continue-on-error: true
+
+      - name: Build
+        run: npm run build
+
+      - name: Validate build output
+        run: |
+          echo "Checking build output..."
+          test -d dist || (echo "ERROR: dist/ directory not found" && exit 1)
+          test -f dist/index.html || (echo "ERROR: index.html not found in dist/" && exit 1)
+          echo "Build output looks good:"
+          ls -la dist/
+          du -sh dist/
+          echo "Asset sizes:"
+          find dist/assets -type f -exec ls -lh {} \; 2>/dev/null || true
+
+      - name: Upload artifact
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    needs: build-and-validate
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

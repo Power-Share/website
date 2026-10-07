@@ -1,0 +1,36 @@
+<svg viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle for GitHub profile -->
+  <rect width="400" height="400" rx="200" fill="#1A2332"/>
+
+  <defs>
+    <linearGradient id="gL" x1="60" y1="100" x2="200" y2="300">
+      <stop offset="0%" stop-color="#089E9A"/>
+      <stop offset="100%" stop-color="#0ABAB5"/>
+    </linearGradient>
+    <linearGradient id="gR" x1="200" y1="100" x2="340" y2="300">
+      <stop offset="0%" stop-color="#0ABAB5"/>
+      <stop offset="100%" stop-color="#3DD4CF"/>
+    </linearGradient>
+    <clipPath id="gClip">
+      <circle cx="240" cy="200" r="90"/>
+    </clipPath>
+  </defs>
+
+  <!-- Left circle -->
+  <circle cx="160" cy="200" r="90" stroke="url(#gL)" stroke-width="6" fill="#0ABAB5" fill-opacity="0.08"/>
+
+  <!-- Right circle -->
+  <circle cx="240" cy="200" r="90" stroke="url(#gR)" stroke-width="6" fill="#3DD4CF" fill-opacity="0.08"/>
+
+  <!-- Intersection highlight -->
+  <g clip-path="url(#gClip)">
+    <circle cx="160" cy="200" r="90" fill="#0ABAB5" fill-opacity="0.12"/>
+  </g>
+
+  <!-- Lightning bolt -->
+  <path d="M188 162 L207 162 L196 193 L215 193 L182 243 L192 208 L175 208Z" fill="#F5A623"/>
+
+  <!-- Bidirectional flow arrows -->
+  <path d="M130 175 L120 181 L120 169Z" fill="#089E9A" opacity="0.6"/>
+  <path d="M270 225 L280 219 L280 231Z" fill="#3DD4CF" opacity="0.6"/>
+</svg>

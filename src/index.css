@@ -1,0 +1,56 @@
+@import "tailwindcss";
+
+@theme {
+  --color-teal: #0ABAB5;
+  --color-teal-light: #3DD4CF;
+  --color-teal-dark: #089E9A;
+  --color-amber: #F5A623;
+  --color-amber-light: #FFBF4A;
+  --color-navy: #1A2332;
+  --color-navy-light: #243044;
+  --color-cloud: #F8FAFB;
+  --color-green: #34C759;
+  --color-coral: #FF6B6B;
+
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", monospace;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+  }
+}
+
+@keyframes energy-pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+@keyframes flow-dash {
+  to { stroke-dashoffset: -40; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.animate-energy-pulse {
+  animation: energy-pulse 2s ease-in-out infinite;
+}
+
+.animate-flow-dash {
+  animation: flow-dash 2s linear infinite;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
