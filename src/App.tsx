@@ -11,15 +11,16 @@ import { Footer } from './components/Footer';
 import { Privacy } from './pages/Privacy';
 import { Terms } from './pages/Terms';
 import { Impressum } from './pages/Impressum';
+import { Poella } from './pages/Poella';
 
-type Page = 'home' | 'privacy' | 'terms' | 'imprint';
+type Page = 'home' | 'privacy' | 'terms' | 'imprint' | 'poella';
 
-const LEGAL_PAGES = new Set(['privacy', 'terms', 'imprint']);
+const HIDDEN_PAGES = new Set(['privacy', 'terms', 'imprint', 'poella']);
 
 function useHashRoute(): [Page, (p: Page) => void] {
   const getPage = (): Page => {
     const hash = window.location.hash.replace('#', '');
-    if (LEGAL_PAGES.has(hash)) return hash as Page;
+    if (HIDDEN_PAGES.has(hash)) return hash as Page;
     return 'home';
   };
 
@@ -28,7 +29,7 @@ function useHashRoute(): [Page, (p: Page) => void] {
   useEffect(() => {
     const onHash = () => {
       const hash = window.location.hash.replace('#', '');
-      if (LEGAL_PAGES.has(hash)) {
+      if (HIDDEN_PAGES.has(hash)) {
         setPageState(hash as Page);
         window.scrollTo(0, 0);
       } else if (page !== 'home') {
@@ -79,6 +80,7 @@ function App() {
       {page === 'privacy' && <Privacy />}
       {page === 'terms' && <Terms />}
       {page === 'imprint' && <Impressum />}
+      {page === 'poella' && <Poella />}
       <Footer />
     </>
   );
