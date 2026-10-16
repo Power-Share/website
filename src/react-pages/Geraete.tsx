@@ -47,7 +47,7 @@ const categories: DeviceCategory[] = [
       { name: 'Fronius Symo', description: 'via Fronius Solar API (lokal)', status: 'supported' },
       { name: 'Fronius Gen24 / Primo', description: 'via Fronius Solar API (lokal)', status: 'supported' },
       { name: 'Fronius (SunSpec Modbus)', description: 'via Modbus TCP, Port 502, SunSpec Model 113', status: 'supported' },
-      { name: 'Solinteg MHT 25–50K', description: 'Hybrid-Wechselrichter via Modbus RTU (RS-485)', status: 'supported' },
+      { name: 'Solinteg MHT 25–50K', description: 'Hybrid-Wechselrichter via Modbus TCP', status: 'supported' },
       { name: 'Huawei SUN2000', description: 'via Modbus TCP', status: 'planned' },
       { name: 'SMA Sunny Boy / Tripower', description: 'via Modbus TCP', status: 'planned' },
     ],
@@ -60,7 +60,8 @@ const categories: DeviceCategory[] = [
     protocolLabel: 'Solar API / Modbus TCP',
     devices: [
       { name: 'Fronius BYD Battery-Box', description: 'via Fronius Solar API (Spannung, Strom, Ladestand)', status: 'supported' },
-      { name: 'Solinteg (integriert)', description: 'im Hybrid-Wechselrichter, via Modbus RTU', status: 'supported' },
+      { name: 'Solinteg (integriert)', description: 'im Hybrid-Wechselrichter, via Modbus TCP', status: 'supported' },
+      { name: 'Marstek Venus-E 3', description: 'via Modbus TCP', status: 'supported' },
       { name: 'Huawei LUNA2000', description: 'via Modbus TCP', status: 'planned' },
     ],
   },
@@ -128,7 +129,7 @@ const protocols = [
   },
   {
     icon: Cable,
-    name: 'Modbus TCP/RTU',
+    name: 'Modbus TCP',
     desc: 'Industriestandard für Wechselrichter und Speichersysteme (SunSpec-kompatibel)',
   },
   {
