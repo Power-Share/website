@@ -330,12 +330,19 @@ export function Poella() {
                   <h3 className="font-semibold text-text-primary text-lg mb-2">
                     Geräte in Betrieb nehmen
                   </h3>
-                  <p className="text-text-secondary">
+                  <p className="text-text-secondary mb-4">
                     Nach Erhalt der Geräte: Energy-Agent an die Steckdose anschließen, mit dem
-                    WLAN verbinden und den Smart-Meter-Adapter am Zähler anbringen. Eine
-                    Gebrauchsanleitung liegt der Sendung bei. Alternativ können Sie sich für die
-                    Installationstage im Jänner anmelden.
+                    WLAN verbinden und den Smart-Meter-Adapter am Zähler anbringen.
+                    Alternativ können Sie sich für die Installationstage im Jänner anmelden.
                   </p>
+                  <a
+                    href="/docs/energy-agent-kurzanleitung.pdf"
+                    download="Energy-Agent_Kurzanleitung.pdf"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 border border-teal text-teal rounded-lg font-medium hover:bg-teal/10 transition-colors"
+                  >
+                    <Download className="w-4 h-4" />
+                    Kurzanleitung Energy-Agent (PDF)
+                  </a>
                 </div>
               </div>
             </motion.div>
