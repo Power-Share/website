@@ -294,7 +294,7 @@ export function Geraete() {
               href="mailto:powersharehome-support@evn.at"
               className="inline-flex items-center gap-2 px-6 py-3 bg-teal text-white rounded-xl font-semibold hover:bg-teal-dark transition-colors"
             >
-              powersharehome-support@evn.at
+              support@power-share.io
             </a>
           </motion.div>
         </div>
