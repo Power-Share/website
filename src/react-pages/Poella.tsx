@@ -279,7 +279,7 @@ export function Poella() {
                     </a>
                     <a
                       href="/docs/vollmacht-smart-meter-schluessel.pdf"
-                      download
+                      download="Vollmacht_Smart-Meter-Schluessel.pdf"
                       className="inline-flex items-center gap-2 px-5 py-2.5 border border-teal text-teal rounded-lg font-medium hover:bg-teal/10 transition-colors"
                     >
                       <Download className="w-4 h-4" />
@@ -309,7 +309,7 @@ export function Poella() {
                   <div className="flex flex-wrap gap-3">
                     <a
                       href="/docs/teilnahmevertrag-poella.pdf"
-                      download
+                      download="PowerShareHome_Teilnahmevertrag.pdf"
                       className="inline-flex items-center gap-2 px-5 py-2.5 bg-navy dark:bg-teal text-white rounded-lg font-medium hover:opacity-90 transition-opacity"
                     >
                       <Download className="w-4 h-4" />
