@@ -11,9 +11,9 @@ export function Header() {
   const { lang, setLang, t } = useLanguage();
 
   const navLinks = [
-    { label: t('nav.howItWorks'), href: '#how-it-works' },
-    { label: t('nav.community'), href: '#communities' },
-    { label: t('nav.utilities'), href: '#utilities' },
+    { label: t('nav.howItWorks'), href: '/#how-it-works' },
+    { label: t('nav.community'), href: '/#communities' },
+    { label: t('nav.utilities'), href: '/#utilities' },
   ];
 
   useEffect(() => {
@@ -54,7 +54,7 @@ export function Header() {
           </button>
 
           <a
-            href="#contact"
+            href="/#contact"
             className="bg-teal text-white px-5 py-2 rounded-full text-sm font-semibold hover:bg-teal-dark transition-colors"
           >
             {t('nav.getStarted')}
@@ -103,7 +103,7 @@ export function Header() {
                 </a>
               ))}
               <a
-                href="#contact"
+                href="/#contact"
                 className="bg-teal text-white px-5 py-3 rounded-full text-center font-semibold mt-2"
                 onClick={() => setMobileOpen(false)}
               >

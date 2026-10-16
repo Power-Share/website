@@ -25,14 +25,14 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
           cache: 'npm'
 
       - name: Install dependencies
         run: npm ci
 
       - name: Type check
-        run: npx tsc --noEmit
+        run: npx astro check
 
       - name: Lint (oxlint)
         run: npx oxlint src/ --ignore-pattern="src/components/variants/*" --ignore-pattern="src/components/DesignSwitcher.tsx"
@@ -54,7 +54,7 @@ jobs:
 
       - name: Build
         env:
-          VITE_FORM_ENDPOINT: ${{ secrets.VITE_FORM_ENDPOINT }}
+          PUBLIC_FORM_ENDPOINT: ${{ secrets.VITE_FORM_ENDPOINT }}
         run: npm run build
 
       - name: Validate build output

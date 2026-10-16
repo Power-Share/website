@@ -3,7 +3,7 @@ import { Logo } from './Logo';
 import { Globe, Code, CheckCircle, Loader2 } from 'lucide-react';
 import { useLanguage } from '../i18n/LanguageContext';
 
-const FORM_ENDPOINT = import.meta.env.VITE_FORM_ENDPOINT || '';
+const FORM_ENDPOINT = import.meta.env.PUBLIC_FORM_ENDPOINT || '';
 
 export function Footer() {
   const { t } = useLanguage();
@@ -24,19 +24,19 @@ export function Footer() {
           <div>
             <h4 className="font-semibold text-white mb-4 text-sm uppercase tracking-wider">{t('footer.product')}</h4>
             <ul className="space-y-3">
-              <li><a href="#how-it-works" className="text-sm hover:text-teal transition-colors">{t('footer.howItWorks')}</a></li>
-              <li><a href="#communities" className="text-sm hover:text-teal transition-colors">{t('footer.forCommunities')}</a></li>
-              <li><a href="#utilities" className="text-sm hover:text-teal transition-colors">{t('footer.forUtilities')}</a></li>
+              <li><a href="/#how-it-works" className="text-sm hover:text-teal transition-colors">{t('footer.howItWorks')}</a></li>
+              <li><a href="/#communities" className="text-sm hover:text-teal transition-colors">{t('footer.forCommunities')}</a></li>
+              <li><a href="/#utilities" className="text-sm hover:text-teal transition-colors">{t('footer.forUtilities')}</a></li>
             </ul>
           </div>
 
           <div>
             <h4 className="font-semibold text-white mb-4 text-sm uppercase tracking-wider">{t('footer.company')}</h4>
             <ul className="space-y-3">
-              <li><a href="#contact" className="text-sm hover:text-teal transition-colors">{t('footer.contact')}</a></li>
-              <li><a href="#imprint" className="text-sm hover:text-teal transition-colors">{t('footer.imprint')}</a></li>
-              <li><a href="#privacy" className="text-sm hover:text-teal transition-colors">{t('footer.privacy')}</a></li>
-              <li><a href="#terms" className="text-sm hover:text-teal transition-colors">{t('footer.terms')}</a></li>
+              <li><a href="/#contact" className="text-sm hover:text-teal transition-colors">{t('footer.contact')}</a></li>
+              <li><a href="/imprint" className="text-sm hover:text-teal transition-colors">{t('footer.imprint')}</a></li>
+              <li><a href="/privacy" className="text-sm hover:text-teal transition-colors">{t('footer.privacy')}</a></li>
+              <li><a href="/terms" className="text-sm hover:text-teal transition-colors">{t('footer.terms')}</a></li>
             </ul>
           </div>
 

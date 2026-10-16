@@ -1,12 +1,10 @@
-"use client";
-
 import { motion, useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
 import { useLanguage } from '../../i18n/LanguageContext';
 import { CheckCircle, Loader2 } from 'lucide-react';
 
 // Set this to your deployed Google Apps Script URL
-const FORM_ENDPOINT = import.meta.env.VITE_FORM_ENDPOINT || '';
+const FORM_ENDPOINT = import.meta.env.PUBLIC_FORM_ENDPOINT || '';
 
 type FormStatus = 'idle' | 'submitting' | 'success' | 'error';
 

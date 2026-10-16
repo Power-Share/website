@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { HomePage } from '../components/HomePage';
+---
+<BaseLayout>
+  <HomePage client:load />
+  <script is:inline>
+    // Redirect old hash-based URLs to new paths
+    (function() {
+      var hash = window.location.hash.replace('#', '');
+      var routes = { privacy: '/privacy', terms: '/terms', imprint: '/imprint', poella: '/poella' };
+      if (routes[hash]) {
+        window.location.replace(routes[hash]);
+      }
+    })();
+  </script>
+</BaseLayout>
