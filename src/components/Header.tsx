@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Logo } from './Logo';
-import { ThemeToggle } from './ThemeToggle';
 import { useLanguage } from '../i18n/LanguageContext';
 
 export function Header() {
@@ -44,8 +43,6 @@ export function Header() {
             </a>
           ))}
 
-          <ThemeToggle />
-
           <button
             onClick={() => setLang(lang === 'en' ? 'de' : 'en')}
             className="text-xs font-bold border border-gray-300 dark:border-white/20 rounded-full px-3 py-1 text-gray-600 dark:text-gray-300 hover:border-teal hover:text-teal transition-colors"
@@ -62,7 +59,6 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-3 md:hidden">
-          <ThemeToggle />
           <button
             onClick={() => setLang(lang === 'en' ? 'de' : 'en')}
             className="text-xs font-bold border border-gray-300 dark:border-white/20 rounded-full px-2.5 py-1 text-gray-600 dark:text-gray-300"

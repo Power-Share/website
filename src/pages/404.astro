@@ -1,0 +1,56 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Page not found — Power Share FlexCo">
+  <main class="min-h-screen bg-bg-primary flex items-center justify-center px-6">
+    <div class="text-center max-w-md">
+      <p class="text-8xl font-bold text-teal mb-4">404</p>
+      <h1 id="heading" class="text-2xl font-bold text-text-primary mb-3">Page not found</h1>
+      <p id="message" class="text-text-secondary mb-8">
+        The requested page does not exist or has been moved.
+      </p>
+      <p class="text-text-muted text-sm mb-4">
+        <span id="redirect-text">Redirecting to homepage in</span>
+        <span id="countdown" class="font-mono font-bold text-teal">10</span>
+        <span id="redirect-unit">seconds…</span>
+      </p>
+      <a
+        id="home-link"
+        href="/"
+        class="inline-flex items-center gap-2 px-6 py-3 bg-teal text-white rounded-xl font-semibold hover:bg-teal-dark transition-colors"
+      >
+        Go to homepage
+      </a>
+    </div>
+  </main>
+  <script is:inline>
+    (function() {
+      var hash = window.location.hash.replace('#', '');
+      var routes = { privacy: '/privacy', terms: '/terms', imprint: '/imprint', poella: '/poella', geraete: '/geraete' };
+      if (routes[hash]) {
+        window.location.replace(routes[hash]);
+        return;
+      }
+
+      var lang = (localStorage.getItem('lang') || navigator.language || 'en').substring(0, 2);
+      if (lang === 'de') {
+        document.getElementById('heading').textContent = 'Seite nicht gefunden';
+        document.getElementById('message').textContent = 'Die gewünschte Seite existiert nicht oder wurde verschoben.';
+        document.getElementById('redirect-text').textContent = 'Weiterleitung zur Startseite in';
+        document.getElementById('redirect-unit').textContent = 'Sekunden\u2026';
+        document.getElementById('home-link').textContent = 'Zur Startseite';
+      }
+
+      var seconds = 10;
+      var el = document.getElementById('countdown');
+      var timer = setInterval(function() {
+        seconds--;
+        if (el) el.textContent = seconds;
+        if (seconds <= 0) {
+          clearInterval(timer);
+          window.location.replace('/');
+        }
+      }, 1000);
+    })();
+  </script>
+</BaseLayout>
