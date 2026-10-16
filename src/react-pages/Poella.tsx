@@ -267,15 +267,25 @@ export function Poella() {
                   <p className="text-text-secondary mb-3">
                     Falls Sie noch kein Mitglied sind, geben Sie Ihr Interesse unverbindlich bekannt:
                   </p>
-                  <a
-                    href="https://app.egon.energy/poella"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-5 py-2.5 bg-teal text-white rounded-lg font-medium hover:bg-teal-dark transition-colors"
-                  >
-                    <ExternalLink className="w-4 h-4" />
-                    app.egon.energy/poella
-                  </a>
+                  <div className="flex flex-wrap gap-3">
+                    <a
+                      href="https://app.egon.energy/poella"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-5 py-2.5 bg-teal text-white rounded-lg font-medium hover:bg-teal-dark transition-colors"
+                    >
+                      <ExternalLink className="w-4 h-4" />
+                      app.egon.energy/poella
+                    </a>
+                    <a
+                      href="/docs/vollmacht-smart-meter-schluessel.pdf"
+                      download
+                      className="inline-flex items-center gap-2 px-5 py-2.5 border border-teal text-teal rounded-lg font-medium hover:bg-teal/10 transition-colors"
+                    >
+                      <Download className="w-4 h-4" />
+                      Vollmacht Smart-Meter-Schlüssel (PDF)
+                    </a>
+                  </div>
                 </div>
               </div>
             </motion.div>

@@ -1,7 +1,7 @@
 import QRCode from 'qrcode';
 import { writeFileSync } from 'fs';
 
-const url = 'https://power-share.io/#poella';
+const url = 'https://power-share.io/poella';
 const teal = '#0ABAB5';
 const navy = '#1A2332';
 
@@ -51,7 +51,7 @@ for (let row = 0; row < size; row++) {
 
 // Build label text
 const labelY = totalSize - padding / 2 + 4;
-const label = `<text x="${totalSize / 2}" y="${labelY}" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="16" font-weight="600" fill="${navy}">power-share.io/#poella</text>`;
+const label = `<text x="${totalSize / 2}" y="${labelY}" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="16" font-weight="600" fill="${navy}">power-share.io/poella</text>`;
 
 const svg = `<?xml version="1.0" encoding="utf-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${totalSize} ${totalSize + 28}" width="${totalSize}" height="${totalSize + 28}">
@@ -83,7 +83,7 @@ for (let row = 0; row < size; row++) {
   }
 }
 
-const labelBW = `<text x="${totalSize / 2}" y="${labelY}" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="16" font-weight="600" fill="#000">power-share.io/#poella</text>`;
+const labelBW = `<text x="${totalSize / 2}" y="${labelY}" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="16" font-weight="600" fill="#000">power-share.io/poella</text>`;
 
 const svgBW = `<?xml version="1.0" encoding="utf-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${totalSize} ${totalSize + 28}" width="${totalSize}" height="${totalSize + 28}">
