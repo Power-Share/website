@@ -105,7 +105,6 @@ const categories: DeviceCategory[] = [
       { name: 'Iskra AM550', description: 'via DLMS/COSEM, AES-GCM verschlüsselt', status: 'supported' },
       { name: 'Kamstrup HAN', description: 'via HAN-Schnittstelle (DLMS/COSEM)', status: 'supported' },
       { name: 'Siemens TD3511', description: 'via DLMS/COSEM', status: 'supported' },
-      { name: 'IKEA VINDSTYRKA', description: 'Umgebungssensor (Temperatur, Feuchtigkeit, PM2.5)', status: 'supported' },
     ],
   },
   {
