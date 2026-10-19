@@ -3,17 +3,23 @@
  *
  * SETUP:
  * 1. Create a Google Sheet called "Power Share Inquiries"
- * 2. It will auto-create two tabs:
- *    - "Submissions" (contact form inquiries)
- *    - "Newsletter" (newsletter signups)
+ * 2. It will auto-create three tabs:
+ *    - "Submissions" (contact form inquiries from main website)
+ *    - "Newsletter" (newsletter signups from footer)
+ *    - "Pölla-Anmeldungen" (PowerShareHome registrations from /poella2)
  * 3. Go to Extensions > Apps Script, paste this code, save
  * 4. Deploy > New deployment > Web app
  *    - Execute as: Me
  *    - Who has access: Anyone
- * 5. Copy the deployment URL into .env as VITE_FORM_ENDPOINT
+ * 5. Copy the deployment URL into .env as PUBLIC_FORM_ENDPOINT
  *
  * IMPORTANT: After updating this code, create a NEW deployment
  * (don't edit the existing one) to get the changes live.
+ *
+ * FORM TYPES:
+ * - type: "newsletter"            → Newsletter tab (email, source)
+ * - type: "poella-registration"   → Pölla-Anmeldungen tab (full registration data)
+ * - (no type / other)             → Submissions tab (name, email, role)
  */
 
 var NOTIFY_EMAIL = 'hello@power-share.io';
@@ -23,7 +29,60 @@ function doPost(e) {
     var data = JSON.parse(e.postData.contents);
     var ss = SpreadsheetApp.getActiveSpreadsheet();
 
-    if (data.type === 'newsletter') {
+    if (data.type === 'poella-registration') {
+      // Pölla PowerShareHome registration
+      var poellaSheet = ss.getSheetByName('Pölla-Anmeldungen');
+      if (!poellaSheet) {
+        poellaSheet = ss.insertSheet('Pölla-Anmeldungen');
+        poellaSheet.getRange(1, 1, 1, 15).setValues([[
+          'Zeitstempel', 'Name', 'E-Mail', 'Adresse', 'PLZ', 'Ort', 'Telefon',
+          'Anlagen', 'PV-Marke', 'Speicher-Marke', 'Wallbox-Marke', 'Wärmepumpe-Marke',
+          'Smart Meter', 'WLAN', 'Vertrag zugestimmt'
+        ]]);
+        poellaSheet.setFrozenRows(1);
+        poellaSheet.getRange(1, 1, 1, 15).setFontWeight('bold');
+      }
+
+      var equipment = (data.equipment || []).join(', ');
+      var brands = data.brands || {};
+
+      poellaSheet.appendRow([
+        data.timestamp || new Date().toISOString(),
+        data.name || '',
+        data.email || '',
+        data.address || '',
+        data.plz || '',
+        data.ort || '',
+        data.phone || '',
+        equipment,
+        brands.pv || '',
+        brands.battery || '',
+        brands.wallbox || '',
+        brands.heatpump || '',
+        data.smartMeter || '',
+        data.wlan || '',
+        data.acceptContract ? 'Ja' : 'Nein'
+      ]);
+
+      if (NOTIFY_EMAIL && data.email) {
+        MailApp.sendEmail(
+          NOTIFY_EMAIL,
+          'Neue Pölla-Anmeldung: ' + (data.name || data.email),
+          'Neue PowerShareHome Anmeldung:\n\n' +
+          'Name: ' + (data.name || '') + '\n' +
+          'E-Mail: ' + (data.email || '') + '\n' +
+          'Adresse: ' + (data.address || '') + ', ' + (data.plz || '') + ' ' + (data.ort || '') + '\n' +
+          'Telefon: ' + (data.phone || '–') + '\n' +
+          'Anlagen: ' + (equipment || 'keine') + '\n' +
+          'Smart Meter: ' + (data.smartMeter || '–') + '\n' +
+          'WLAN: ' + (data.wlan || '–') + '\n' +
+          'Vertrag zugestimmt: ' + (data.acceptContract ? 'Ja' : 'Nein') + '\n' +
+          'Zeitpunkt: ' + new Date().toLocaleString('de-AT') + '\n\n' +
+          'Alle Anmeldungen: ' + ss.getUrl()
+        );
+      }
+
+    } else if (data.type === 'newsletter') {
       // Newsletter signup
       var nlSheet = ss.getSheetByName('Newsletter');
       if (!nlSheet) {
