@@ -30,6 +30,7 @@
 
 var NOTIFY_EMAIL = 'hello@power-share.io';
 var SITE_URL = 'https://power-share.io';
+var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyxdZptpswpV00B0H-CsnKZeGMVdue5KEvfoNxRNMOGkWcuC_32dW_CWw4AzhKHhMYVhg/exec';
 
 function generateToken() {
   var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -101,7 +102,7 @@ function doPost(e) {
       ]);
 
       // Send confirmation email to participant
-      var confirmUrl = getScriptUrl() + '?action=confirm&token=' + token;
+      var confirmUrl = SCRIPT_URL + '?action=confirm&token=' + token;
 
       MailApp.sendEmail({
         to: data.email,
