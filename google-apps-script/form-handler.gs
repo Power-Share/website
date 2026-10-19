@@ -30,7 +30,13 @@
 
 var NOTIFY_EMAIL = 'hello@power-share.io';
 var SITE_URL = 'https://power-share.io';
-var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx8NT_yh50tyQi5XB6a2cq7W8wZsQd2RPGpdnna7pnp9yrRwiWAUqHojHNOrxQ1u6xE0A/exec';
+// SCRIPT_URL is built dynamically from ScriptApp to avoid updating on each deployment.
+// The /a/DOMAIN/ prefix is stripped to produce a public URL that works for external users.
+function getPublicScriptUrl() {
+  var url = ScriptApp.getService().getUrl();
+  // Remove workspace domain prefix: /a/power-share.io/
+  return url.replace(/\/a\/[^/]+\//, '/');
+}
 
 function generateToken() {
   var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -102,7 +108,7 @@ function doPost(e) {
       ]);
 
       // Send confirmation email to participant
-      var confirmUrl = SCRIPT_URL + '?action=confirm&token=' + token;
+      var confirmUrl = getPublicScriptUrl() + '?action=confirm&token=' + token;
 
       MailApp.sendEmail({
         to: data.email,
