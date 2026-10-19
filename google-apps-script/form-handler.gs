@@ -30,7 +30,7 @@
 
 var NOTIFY_EMAIL = 'hello@power-share.io';
 var SITE_URL = 'https://power-share.io';
-var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyxdZptpswpV00B0H-CsnKZeGMVdue5KEvfoNxRNMOGkWcuC_32dW_CWw4AzhKHhMYVhg/exec';
+var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx8NT_yh50tyQi5XB6a2cq7W8wZsQd2RPGpdnna7pnp9yrRwiWAUqHojHNOrxQ1u6xE0A/exec';
 
 function generateToken() {
   var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
