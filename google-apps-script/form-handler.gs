@@ -87,7 +87,9 @@ function doPost(e) {
       var nlSheet = ss.getSheetByName('Newsletter');
       if (!nlSheet) {
         nlSheet = ss.insertSheet('Newsletter');
-        nlSheet.getRange(1, 1, 1, 3).setValues([['Timestamp', 'Email', 'Source']]);
+        nlSheet.getRange(1, 1, 1, 3).setValues([['Zeitstempel', 'E-Mail', 'Quelle']]);
+        nlSheet.setFrozenRows(1);
+        nlSheet.getRange(1, 1, 1, 3).setFontWeight('bold');
       }
 
       // Check for duplicate
@@ -123,7 +125,9 @@ function doPost(e) {
       if (!subSheet) {
         subSheet = ss.getActiveSheet();
         subSheet.setName('Submissions');
-        subSheet.getRange(1, 1, 1, 5).setValues([['Timestamp', 'Name', 'Email', 'Role', 'Source']]);
+        subSheet.getRange(1, 1, 1, 5).setValues([['Zeitstempel', 'Name', 'E-Mail', 'Rolle', 'Quelle']]);
+        subSheet.setFrozenRows(1);
+        subSheet.getRange(1, 1, 1, 5).setFontWeight('bold');
       }
 
       subSheet.appendRow([
