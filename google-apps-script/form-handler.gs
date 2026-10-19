@@ -105,6 +105,8 @@ function doPost(e) {
 
       MailApp.sendEmail({
         to: data.email,
+        replyTo: 'powersharehome-support@evn.at',
+        name: 'PowerShareHome',
         subject: 'PowerShareHome — Bitte bestätigen Sie Ihre Anmeldung',
         htmlBody:
           '<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">' +
