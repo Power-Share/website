@@ -3,7 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { HomePage } from '../components/HomePage';
 ---
 <BaseLayout>
-  <HomePage client:load />
+  <HomePage client:only="react" />
   <script is:inline>
     // Redirect old hash-based URLs to new paths
     (function() {

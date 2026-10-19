@@ -3,5 +3,5 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { ImprintPage } from '../components/ImprintPage';
 ---
 <BaseLayout title="Impressum — Power Share FlexCo">
-  <ImprintPage client:load />
+  <ImprintPage client:only="react" />
 </BaseLayout>

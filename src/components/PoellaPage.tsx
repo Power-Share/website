@@ -1,3 +1,4 @@
+import React from 'react';
 import { ReactProviders } from './ReactProviders';
 import { Header } from './Header';
 import { Poella } from '../react-pages/Poella';
