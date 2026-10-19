@@ -101,7 +101,7 @@ const brandOptions: Record<string, string[]> = {
   heatpump: ['Vaillant', 'Viessmann', 'Daikin', 'Mitsubishi', 'Panasonic', 'Bosch', 'Wolf', 'Nibe', 'Andere', 'Weiß ich nicht'],
 };
 
-type FormStatus = 'idle' | 'submitting' | 'success' | 'error';
+type FormStatus = 'idle' | 'submitting' | 'success' | 'duplicate' | 'error';
 
 function RegistrationForm() {
   const [name, setName] = useState('');
@@ -138,28 +138,46 @@ function RegistrationForm() {
     setStatus('submitting');
     try {
       if (FORM_ENDPOINT) {
-        await fetch(FORM_ENDPOINT, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            type: 'poella-registration',
-            name,
-            address,
-            plz,
-            ort,
-            email,
-            phone,
-            equipment: [...equipment],
-            brands,
-            smartMeter,
-            wlan,
-            acceptContract,
-            acceptPrivacy,
-            source: 'poella-landing',
-            timestamp: new Date().toISOString(),
-          }),
+        const payload = JSON.stringify({
+          type: 'poella-registration',
+          name,
+          address,
+          plz,
+          ort,
+          email,
+          phone,
+          equipment: [...equipment],
+          brands,
+          smartMeter,
+          wlan,
+          acceptContract,
+          acceptPrivacy,
+          source: 'poella-landing',
+          timestamp: new Date().toISOString(),
         });
+
+        // Try with cors first to read response (duplicate detection), fallback to no-cors
+        try {
+          const res = await fetch(FORM_ENDPOINT, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: payload,
+            redirect: 'follow',
+          });
+          const result = await res.json();
+          if (result.status === 'duplicate') {
+            setStatus('duplicate');
+            return;
+          }
+        } catch {
+          // CORS blocked — fire-and-forget with no-cors
+          await fetch(FORM_ENDPOINT, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: payload,
+          });
+        }
       }
       setStatus('success');
     } catch {
@@ -173,12 +191,29 @@ function RegistrationForm() {
   if (status === 'success') {
     return (
       <div className="text-center py-10">
-        <CheckCircle className="text-green mx-auto mb-4" size={48} />
+        <Mail className="text-teal mx-auto mb-4" size={48} />
         <h3 className="text-xl font-bold text-text-primary mb-2">
-          Anmeldung erfolgreich!
+          Fast geschafft!
+        </h3>
+        <p className="text-text-secondary mb-2">
+          Wir haben Ihnen eine Bestätigungs-E-Mail an <strong className="text-text-primary">{email}</strong> gesendet.
+        </p>
+        <p className="text-text-secondary">
+          Bitte klicken Sie auf den Link in der E-Mail, um Ihre Anmeldung abzuschließen.
+        </p>
+      </div>
+    );
+  }
+
+  if (status === 'duplicate') {
+    return (
+      <div className="text-center py-10">
+        <CheckCircle className="text-teal mx-auto mb-4" size={48} />
+        <h3 className="text-xl font-bold text-text-primary mb-2">
+          Bereits angemeldet
         </h3>
         <p className="text-text-secondary">
-          Vielen Dank für Ihre Anmeldung. Wir melden uns in Kürze bei Ihnen.
+          Diese E-Mail-Adresse ist bereits registriert. Prüfen Sie Ihren Posteingang für die Bestätigungs-E-Mail.
         </p>
       </div>
     );
@@ -440,9 +475,60 @@ function RegistrationForm() {
   );
 }
 
+function ConfirmationBanner() {
+  const [confirmed, setConfirmed] = useState<string | null>(null);
+
+  useState(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      const c = params.get('confirmed');
+      if (c) {
+        setConfirmed(c);
+        // Clean URL without reload
+        window.history.replaceState({}, '', window.location.pathname);
+      }
+    }
+  });
+
+  if (!confirmed) return null;
+
+  if (confirmed === '1') {
+    return (
+      <div className="bg-green/10 border border-green/30 rounded-xl p-6 text-center max-w-2xl mx-auto mb-8">
+        <CheckCircle className="text-green mx-auto mb-3" size={40} />
+        <h3 className="text-lg font-bold text-text-primary mb-1">Anmeldung bestätigt!</h3>
+        <p className="text-text-secondary text-sm">
+          Vielen Dank — Ihre Teilnahme am Projekt PowerShareHome ist nun bestätigt.
+          Wir melden uns in Kürze mit den nächsten Schritten.
+        </p>
+      </div>
+    );
+  }
+
+  if (confirmed === 'already') {
+    return (
+      <div className="bg-teal/10 border border-teal/30 rounded-xl p-6 text-center max-w-2xl mx-auto mb-8">
+        <CheckCircle className="text-teal mx-auto mb-3" size={40} />
+        <h3 className="text-lg font-bold text-text-primary mb-1">Bereits bestätigt</h3>
+        <p className="text-text-secondary text-sm">Ihre Anmeldung wurde bereits bestätigt.</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="bg-coral/10 border border-coral/30 rounded-xl p-6 text-center max-w-2xl mx-auto mb-8">
+      <p className="text-text-primary font-medium">Ungültiger Bestätigungslink. Bitte prüfen Sie Ihre E-Mail oder kontaktieren Sie uns.</p>
+    </div>
+  );
+}
+
 export function Poella2() {
   return (
     <div className="min-h-screen bg-bg-primary pt-20">
+      {/* Confirmation Banner (shown after email link click) */}
+      <div className="pt-24 px-6">
+        <ConfirmationBanner />
+      </div>
       {/* Hero */}
       <section className="relative overflow-hidden bg-gradient-to-br from-navy via-navy-light to-navy py-20 md:py-28">
         <div className="absolute inset-0 opacity-10">

@@ -18,11 +18,31 @@
  *
  * FORM TYPES:
  * - type: "newsletter"            → Newsletter tab (email, source)
- * - type: "poella-registration"   → Pölla-Anmeldungen tab (full registration data)
+ * - type: "poella-registration"   → Pölla-Anmeldungen tab (full registration + email confirmation)
  * - (no type / other)             → Submissions tab (name, email, role)
+ *
+ * CONFIRMATION FLOW (Pölla):
+ * 1. POST with registration data → saves row with status "ausstehend" + token
+ * 2. Confirmation email sent to participant with link: endpoint?action=confirm&token=XYZ
+ * 3. Participant clicks link → GET updates status to "bestätigt"
+ * 4. Redirect to power-share.io/poella2?confirmed=1
  */
 
 var NOTIFY_EMAIL = 'hello@power-share.io';
+var SITE_URL = 'https://power-share.io';
+
+function generateToken() {
+  var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  var token = '';
+  for (var i = 0; i < 32; i++) {
+    token += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return token;
+}
+
+function getScriptUrl() {
+  return ScriptApp.getService().getUrl();
+}
 
 function doPost(e) {
   try {
@@ -30,19 +50,33 @@ function doPost(e) {
     var ss = SpreadsheetApp.getActiveSpreadsheet();
 
     if (data.type === 'poella-registration') {
-      // Pölla PowerShareHome registration
+      // Pölla PowerShareHome registration with email confirmation
       var poellaSheet = ss.getSheetByName('Pölla-Anmeldungen');
       if (!poellaSheet) {
         poellaSheet = ss.insertSheet('Pölla-Anmeldungen');
-        poellaSheet.getRange(1, 1, 1, 15).setValues([[
+        poellaSheet.getRange(1, 1, 1, 17).setValues([[
           'Zeitstempel', 'Name', 'E-Mail', 'Adresse', 'PLZ', 'Ort', 'Telefon',
           'Anlagen', 'PV-Marke', 'Speicher-Marke', 'Wallbox-Marke', 'Wärmepumpe-Marke',
-          'Smart Meter', 'WLAN', 'Vertrag zugestimmt'
+          'Smart Meter', 'WLAN', 'Vertrag zugestimmt', 'Status', 'Token'
         ]]);
         poellaSheet.setFrozenRows(1);
-        poellaSheet.getRange(1, 1, 1, 15).setFontWeight('bold');
+        poellaSheet.getRange(1, 1, 1, 17).setFontWeight('bold');
       }
 
+      // Check for duplicate email
+      var lastRow = poellaSheet.getLastRow();
+      if (lastRow > 1) {
+        var existingEmails = poellaSheet.getRange(2, 3, lastRow - 1, 1).getValues();
+        for (var i = 0; i < existingEmails.length; i++) {
+          if (existingEmails[i][0] === data.email) {
+            return ContentService
+              .createTextOutput(JSON.stringify({ status: 'duplicate', message: 'E-Mail bereits registriert' }))
+              .setMimeType(ContentService.MimeType.JSON);
+          }
+        }
+      }
+
+      var token = generateToken();
       var equipment = (data.equipment || []).join(', ');
       var brands = data.brands || {};
 
@@ -61,14 +95,48 @@ function doPost(e) {
         brands.heatpump || '',
         data.smartMeter || '',
         data.wlan || '',
-        data.acceptContract ? 'Ja' : 'Nein'
+        data.acceptContract ? 'Ja' : 'Nein',
+        'ausstehend',
+        token
       ]);
 
-      if (NOTIFY_EMAIL && data.email) {
+      // Send confirmation email to participant
+      var confirmUrl = getScriptUrl() + '?action=confirm&token=' + token;
+
+      MailApp.sendEmail({
+        to: data.email,
+        subject: 'PowerShareHome — Bitte bestätigen Sie Ihre Anmeldung',
+        htmlBody:
+          '<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">' +
+          '<h2 style="color: #1A2332;">PowerShareHome — Anmeldung bestätigen</h2>' +
+          '<p>Guten Tag ' + (data.name || '') + ',</p>' +
+          '<p>vielen Dank für Ihre Anmeldung zum Projekt PowerShareHome in der Energiegemeinschaft Pölla.</p>' +
+          '<p>Bitte bestätigen Sie Ihre Anmeldung mit einem Klick auf den folgenden Link:</p>' +
+          '<p style="margin: 24px 0;"><a href="' + confirmUrl + '" style="background: #0ABAB5; color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: bold;">Anmeldung bestätigen</a></p>' +
+          '<p style="font-size: 13px; color: #666;">Falls der Button nicht funktioniert, kopieren Sie diesen Link in Ihren Browser:<br>' +
+          '<a href="' + confirmUrl + '">' + confirmUrl + '</a></p>' +
+          '<hr style="border: none; border-top: 1px solid #eee; margin: 24px 0;">' +
+          '<p><strong>Ihre Angaben:</strong></p>' +
+          '<ul style="color: #444;">' +
+          '<li>Name: ' + (data.name || '') + '</li>' +
+          '<li>Adresse: ' + (data.address || '') + ', ' + (data.plz || '') + ' ' + (data.ort || '') + '</li>' +
+          '<li>Anlagen: ' + (equipment || 'keine angegeben') + '</li>' +
+          '</ul>' +
+          '<p style="font-size: 13px; color: #666;">Bitte vergessen Sie nicht, die unterschriebene ' +
+          '<a href="' + SITE_URL + '/docs/vollmacht-smart-meter-schluessel.pdf">Vollmacht für den Smart-Meter-Schlüssel</a> ' +
+          'per E-Mail an <a href="mailto:powersharehome-support@evn.at">powersharehome-support@evn.at</a> zu senden.</p>' +
+          '<hr style="border: none; border-top: 1px solid #eee; margin: 24px 0;">' +
+          '<p style="font-size: 12px; color: #999;">Power Share FlexCo · Berggasse 5 · 1090 Wien<br>' +
+          'FN 688982 i · ATU83693647 · <a href="mailto:hello@power-share.io">hello@power-share.io</a></p>' +
+          '</div>'
+      });
+
+      // Notify team
+      if (NOTIFY_EMAIL) {
         MailApp.sendEmail(
           NOTIFY_EMAIL,
-          'Neue Pölla-Anmeldung: ' + (data.name || data.email),
-          'Neue PowerShareHome Anmeldung:\n\n' +
+          'Neue Pölla-Anmeldung (ausstehend): ' + (data.name || data.email),
+          'Neue PowerShareHome Anmeldung (Bestätigung ausstehend):\n\n' +
           'Name: ' + (data.name || '') + '\n' +
           'E-Mail: ' + (data.email || '') + '\n' +
           'Adresse: ' + (data.address || '') + ', ' + (data.plz || '') + ' ' + (data.ort || '') + '\n' +
@@ -77,6 +145,7 @@ function doPost(e) {
           'Smart Meter: ' + (data.smartMeter || '–') + '\n' +
           'WLAN: ' + (data.wlan || '–') + '\n' +
           'Vertrag zugestimmt: ' + (data.acceptContract ? 'Ja' : 'Nein') + '\n' +
+          'Status: ausstehend (Bestätigungs-E-Mail gesendet)\n' +
           'Zeitpunkt: ' + new Date().toLocaleString('de-AT') + '\n\n' +
           'Alle Anmeldungen: ' + ss.getUrl()
         );
@@ -163,7 +232,70 @@ function doPost(e) {
   }
 }
 
-function doGet() {
+function doGet(e) {
+  var params = e ? e.parameter : {};
+
+  // Email confirmation handler
+  if (params.action === 'confirm' && params.token) {
+    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var poellaSheet = ss.getSheetByName('Pölla-Anmeldungen');
+
+    if (poellaSheet) {
+      var lastRow = poellaSheet.getLastRow();
+      if (lastRow > 1) {
+        // Token is in column 17
+        var tokens = poellaSheet.getRange(2, 17, lastRow - 1, 1).getValues();
+        for (var i = 0; i < tokens.length; i++) {
+          if (tokens[i][0] === params.token) {
+            var row = i + 2;
+            var currentStatus = poellaSheet.getRange(row, 16).getValue();
+
+            if (currentStatus === 'bestätigt') {
+              // Already confirmed — redirect anyway
+              return HtmlService.createHtmlOutput(
+                '<html><head><meta http-equiv="refresh" content="0;url=' + SITE_URL + '/poella2?confirmed=already"></head>' +
+                '<body>Bereits bestätigt. <a href="' + SITE_URL + '/poella2?confirmed=already">Weiter</a></body></html>'
+              );
+            }
+
+            // Update status to confirmed
+            poellaSheet.getRange(row, 16).setValue('bestätigt');
+
+            // Get name and email for notification
+            var confirmedName = poellaSheet.getRange(row, 2).getValue();
+            var confirmedEmail = poellaSheet.getRange(row, 3).getValue();
+
+            // Notify team
+            if (NOTIFY_EMAIL) {
+              MailApp.sendEmail(
+                NOTIFY_EMAIL,
+                'Pölla-Anmeldung BESTÄTIGT: ' + (confirmedName || confirmedEmail),
+                'Die Anmeldung wurde per E-Mail bestätigt:\n\n' +
+                'Name: ' + confirmedName + '\n' +
+                'E-Mail: ' + confirmedEmail + '\n' +
+                'Bestätigt am: ' + new Date().toLocaleString('de-AT') + '\n\n' +
+                'Alle Anmeldungen: ' + ss.getUrl()
+              );
+            }
+
+            // Redirect to success page
+            return HtmlService.createHtmlOutput(
+              '<html><head><meta http-equiv="refresh" content="0;url=' + SITE_URL + '/poella2?confirmed=1"></head>' +
+              '<body>Bestätigt! <a href="' + SITE_URL + '/poella2?confirmed=1">Weiter</a></body></html>'
+            );
+          }
+        }
+      }
+    }
+
+    // Token not found
+    return HtmlService.createHtmlOutput(
+      '<html><head><meta http-equiv="refresh" content="0;url=' + SITE_URL + '/poella2?confirmed=invalid"></head>' +
+      '<body>Ungültiger Link. <a href="' + SITE_URL + '/poella2">Weiter</a></body></html>'
+    );
+  }
+
+  // Default health check
   return ContentService
     .createTextOutput(JSON.stringify({ status: 'ok', service: 'Power Share FlexCo Form Handler' }))
     .setMimeType(ContentService.MimeType.JSON);
