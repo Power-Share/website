@@ -277,14 +277,6 @@ export function Poella() {
                       <ExternalLink className="w-4 h-4" />
                       app.egon.energy/poella
                     </a>
-                    <a
-                      href="/docs/vollmacht-smart-meter-schluessel.pdf"
-                      download="Vollmacht_Smart-Meter-Schluessel.pdf"
-                      className="inline-flex items-center gap-2 px-5 py-2.5 border border-teal text-teal rounded-lg font-medium hover:bg-teal/10 transition-colors"
-                    >
-                      <Download className="w-4 h-4" />
-                      Vollmacht Smart-Meter-Schlüssel (PDF)
-                    </a>
                   </div>
                 </div>
               </div>
@@ -314,6 +306,14 @@ export function Poella() {
                     >
                       <Download className="w-4 h-4" />
                       Teilnahmevertrag (PDF)
+                    </a>
+                    <a
+                      href="/docs/vollmacht-smart-meter-schluessel.pdf"
+                      download="Vollmacht_Smart-Meter-Schluessel.pdf"
+                      className="inline-flex items-center gap-2 px-5 py-2.5 border border-teal text-teal rounded-lg font-medium hover:bg-teal/10 transition-colors"
+                    >
+                      <Download className="w-4 h-4" />
+                      Vollmacht Smart-Meter-Schlüssel (PDF)
                     </a>
                   </div>
                 </div>
