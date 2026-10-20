@@ -302,45 +302,24 @@ function RegistrationForm() {
         )}
       </div>
 
-      {/* Smart Meter & WLAN */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <h4 className="font-semibold text-text-primary mb-2">Smart Meter vorhanden?</h4>
-          <div className="flex gap-2">
-            {['Ja', 'Nein', 'Weiß nicht'].map((opt) => (
-              <button
-                key={opt}
-                type="button"
-                onClick={() => setSmartMeter(opt)}
-                className={`px-4 py-2 rounded-full text-sm font-medium border transition-colors ${
-                  smartMeter === opt
-                    ? 'bg-teal text-white border-teal'
-                    : 'bg-bg-surface text-text-secondary border-border hover:border-teal'
-                }`}
-              >
-                {opt}
-              </button>
-            ))}
-          </div>
-        </div>
-        <div>
-          <h4 className="font-semibold text-text-primary mb-2">WLAN beim Zählerkasten?</h4>
-          <div className="flex gap-2">
-            {['Ja', 'Nein', 'Unsicher'].map((opt) => (
-              <button
-                key={opt}
-                type="button"
-                onClick={() => setWlan(opt)}
-                className={`px-4 py-2 rounded-full text-sm font-medium border transition-colors ${
-                  wlan === opt
-                    ? 'bg-teal text-white border-teal'
-                    : 'bg-bg-surface text-text-secondary border-border hover:border-teal'
-                }`}
-              >
-                {opt}
-              </button>
-            ))}
-          </div>
+      {/* Smart Meter */}
+      <div>
+        <h4 className="font-semibold text-text-primary mb-2">Smart Meter vorhanden?</h4>
+        <div className="flex gap-2">
+          {['Ja', 'Nein', 'Weiß nicht'].map((opt) => (
+            <button
+              key={opt}
+              type="button"
+              onClick={() => setSmartMeter(opt)}
+              className={`px-4 py-2 rounded-full text-sm font-medium border transition-colors ${
+                smartMeter === opt
+                  ? 'bg-teal text-white border-teal'
+                  : 'bg-bg-surface text-text-secondary border-border hover:border-teal'
+              }`}
+            >
+              {opt}
+            </button>
+          ))}
         </div>
       </div>
 
