@@ -156,28 +156,12 @@ function RegistrationForm() {
           timestamp: new Date().toISOString(),
         });
 
-        // Try with cors first to read response (duplicate detection), fallback to no-cors
-        try {
-          const res = await fetch(FORM_ENDPOINT, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: payload,
-            redirect: 'follow',
-          });
-          const result = await res.json();
-          if (result.status === 'duplicate') {
-            setStatus('duplicate');
-            return;
-          }
-        } catch {
-          // CORS blocked — fire-and-forget with no-cors
-          await fetch(FORM_ENDPOINT, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: { 'Content-Type': 'application/json' },
-            body: payload,
-          });
-        }
+        await fetch(FORM_ENDPOINT, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: payload,
+        });
       }
       setStatus('success');
     } catch {
