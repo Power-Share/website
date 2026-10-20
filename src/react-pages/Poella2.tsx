@@ -357,7 +357,7 @@ function RegistrationForm() {
           <span className="text-text-secondary text-sm leading-relaxed">
             Ich stimme dem{' '}
             <a
-              href="/docs/teilnahmevertrag-poella.pdf"
+              href="/docs/PowerShareHome_Teilnahmevertrag_Power_Share_FlexCo.pdf"
               target="_blank"
               rel="noopener noreferrer"
               className="text-teal underline underline-offset-2"
@@ -378,7 +378,7 @@ function RegistrationForm() {
           <span className="text-text-secondary text-sm leading-relaxed">
             Ich habe die{' '}
             <a
-              href="/docs/leistungsbeschreibung.pdf"
+              href="/docs/PowerShareHome_Teilnahmevertrag_Anlage-1_Leistungsbeschreibung_HEMS.pdf"
               target="_blank"
               rel="noopener noreferrer"
               className="text-teal underline underline-offset-2"
@@ -399,7 +399,7 @@ function RegistrationForm() {
           <span className="text-text-secondary text-sm leading-relaxed">
             Ich habe die{' '}
             <a
-              href="/docs/datenschutzinformation.pdf"
+              href="/docs/PowerShareHome_Teilnahmevertrag_Anlage-2_Datenschutzinformation.pdf"
               target="_blank"
               rel="noopener noreferrer"
               className="text-teal underline underline-offset-2"
@@ -736,8 +736,8 @@ export function Poella2() {
                 </p>
                 <div className="flex flex-wrap gap-2">
                   <a
-                    href="/docs/teilnahmevertrag-poella.pdf"
-                    download="PowerShareHome_Teilnahmevertrag.pdf"
+                    href="/docs/PowerShareHome_Teilnahmevertrag_Power_Share_FlexCo.pdf"
+                    download="PowerShareHome_Teilnahmevertrag_Power_Share_FlexCo.pdf"
                     className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs text-text-muted border border-border rounded-lg hover:border-teal hover:text-teal transition-colors"
                   >
                     <Download className="w-3 h-3" />
