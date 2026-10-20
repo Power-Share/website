@@ -180,7 +180,7 @@ function RegistrationForm() {
 
   if (status === 'success') {
     return (
-      <div className="text-center py-10">
+      <div id="registration-success" className="text-center py-10" ref={(el) => el?.scrollIntoView({ behavior: 'smooth', block: 'center' })}>
         <CheckCircle className="text-green mx-auto mb-4" size={48} />
         <h3 className="text-xl font-bold text-text-primary mb-2">
           Anmeldung erfolgreich!
