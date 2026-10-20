@@ -330,11 +330,11 @@ function RegistrationForm() {
           <dt className="text-text-muted">Kosten:</dt>
           <dd className="text-text-primary">Kostenlos (gesamte Projektdauer)</dd>
           <dt className="text-text-muted">Laufzeit:</dt>
-          <dd className="text-text-primary">Befristet bis 28.02.2028</dd>
+          <dd className="text-text-primary">Befristet bis 29.02.2028</dd>
           <dt className="text-text-muted">Kündigung:</dt>
           <dd className="text-text-primary">Jederzeit, 1 Monat Frist zum Monatsende</dd>
           <dt className="text-text-muted">Geräte:</dt>
-          <dd className="text-text-primary">Leihgabe während der Laufzeit; kostenloser Eigentumsübergang am 28.02.2028 bei aufrechtem Vertrag</dd>
+          <dd className="text-text-primary">Leihgabe während der Laufzeit; kostenloser Eigentumsübergang am 29.02.2028 bei aufrechtem Vertrag</dd>
           <dt className="text-text-muted">Voraussetzung:</dt>
           <dd className="text-text-primary">Mitgliedschaft in der EEG Pölla</dd>
         </dl>
