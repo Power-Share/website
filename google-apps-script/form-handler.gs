@@ -110,39 +110,57 @@ function doPost(e) {
       // Send confirmation email to participant
       var confirmUrl = getPublicScriptUrl() + '?action=confirm&token=' + token;
 
-      MailApp.sendEmail({
-        to: data.email,
-        replyTo: 'powersharehome-support@evn.at',
-        name: 'PowerShareHome',
-        subject: 'PowerShareHome — Bitte bestätigen Sie Ihre Anmeldung',
-        htmlBody:
-          '<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">' +
-          '<h2 style="color: #1A2332;">PowerShareHome — Anmeldung bestätigen</h2>' +
-          '<p>Guten Tag ' + (data.name || '') + ',</p>' +
-          '<p>vielen Dank für Ihre Anmeldung zum Projekt PowerShareHome in der Energiegemeinschaft Pölla.</p>' +
-          '<p>Bitte bestätigen Sie Ihre Anmeldung mit einem Klick auf den folgenden Link:</p>' +
-          '<p style="margin: 24px 0;"><a href="' + confirmUrl + '" style="background: #0ABAB5; color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: bold;">Anmeldung bestätigen</a></p>' +
-          '<p style="font-size: 13px; color: #666;">Falls der Button nicht funktioniert, kopieren Sie diesen Link in Ihren Browser:<br>' +
-          '<a href="' + confirmUrl + '">' + confirmUrl + '</a></p>' +
-          '<hr style="border: none; border-top: 1px solid #eee; margin: 24px 0;">' +
-          '<p><strong>Ihre Angaben:</strong></p>' +
-          '<ul style="color: #444;">' +
-          '<li>Name: ' + (data.name || '') + '</li>' +
-          '<li>Adresse: ' + (data.address || '') + ', ' + (data.plz || '') + ' ' + (data.ort || '') + '</li>' +
-          '<li>Anlagen: ' + (equipment || 'keine angegeben') + '</li>' +
-          '</ul>' +
-          '<p style="font-size: 13px; color: #666;">Bitte vergessen Sie nicht, die unterschriebene ' +
-          '<a href="' + SITE_URL + '/docs/vollmacht-smart-meter-schluessel.pdf">Vollmacht für den Smart-Meter-Schlüssel</a> ' +
-          'per E-Mail an <a href="mailto:powersharehome-support@evn.at">powersharehome-support@evn.at</a> zu senden.</p>' +
-          '<hr style="border: none; border-top: 1px solid #eee; margin: 24px 0;">' +
-          '<p style="font-size: 12px; color: #999;">Power Share FlexCo · Berggasse 5 · 1090 Wien<br>' +
-          'FN 688982 i · ATU83693647 · <a href="mailto:hello@power-share.io">hello@power-share.io</a></p>' +
-          '</div>'
-      });
+      var confirmPlainText =
+        'Guten Tag ' + (data.name || '') + ',\n\n' +
+        'vielen Dank für Ihre Anmeldung zum Projekt PowerShareHome in der Energiegemeinschaft Pölla.\n\n' +
+        'Bitte bestätigen Sie Ihre Anmeldung mit einem Klick auf den folgenden Link:\n' +
+        confirmUrl + '\n\n' +
+        'Ihre Angaben:\n' +
+        '- Name: ' + (data.name || '') + '\n' +
+        '- Adresse: ' + (data.address || '') + ', ' + (data.plz || '') + ' ' + (data.ort || '') + '\n' +
+        '- Anlagen: ' + (equipment || 'keine angegeben') + '\n\n' +
+        'Bitte vergessen Sie nicht, die unterschriebene Vollmacht für den Smart-Meter-Schlüssel (' +
+        SITE_URL + '/docs/vollmacht-smart-meter-schluessel.pdf) per E-Mail an powersharehome-support@evn.at zu senden.\n\n' +
+        'Power Share FlexCo · Berggasse 5 · 1090 Wien\n' +
+        'FN 688982 i · ATU83693647 · hello@power-share.io';
+
+      GmailApp.sendEmail(
+        data.email,
+        'PowerShareHome — Bitte bestätigen Sie Ihre Anmeldung',
+        confirmPlainText,
+        {
+          to: data.email,
+          replyTo: NOTIFY_EMAIL,
+          name: 'PowerShareHome',
+          htmlBody:
+            '<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">' +
+            '<h2 style="color: #1A2332;">PowerShareHome — Anmeldung bestätigen</h2>' +
+            '<p>Guten Tag ' + (data.name || '') + ',</p>' +
+            '<p>vielen Dank für Ihre Anmeldung zum Projekt PowerShareHome in der Energiegemeinschaft Pölla.</p>' +
+            '<p>Bitte bestätigen Sie Ihre Anmeldung mit einem Klick auf den folgenden Link:</p>' +
+            '<p style="margin: 24px 0;"><a href="' + confirmUrl + '" style="background: #0ABAB5; color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: bold;">Anmeldung bestätigen</a></p>' +
+            '<p style="font-size: 13px; color: #666;">Falls der Button nicht funktioniert, kopieren Sie diesen Link in Ihren Browser:<br>' +
+            '<a href="' + confirmUrl + '">' + confirmUrl + '</a></p>' +
+            '<hr style="border: none; border-top: 1px solid #eee; margin: 24px 0;">' +
+            '<p><strong>Ihre Angaben:</strong></p>' +
+            '<ul style="color: #444;">' +
+            '<li>Name: ' + (data.name || '') + '</li>' +
+            '<li>Adresse: ' + (data.address || '') + ', ' + (data.plz || '') + ' ' + (data.ort || '') + '</li>' +
+            '<li>Anlagen: ' + (equipment || 'keine angegeben') + '</li>' +
+            '</ul>' +
+            '<p style="font-size: 13px; color: #666;">Bitte vergessen Sie nicht, die unterschriebene ' +
+            '<a href="' + SITE_URL + '/docs/vollmacht-smart-meter-schluessel.pdf">Vollmacht für den Smart-Meter-Schlüssel</a> ' +
+            'per E-Mail an <a href="mailto:powersharehome-support@evn.at">powersharehome-support@evn.at</a> zu senden.</p>' +
+            '<hr style="border: none; border-top: 1px solid #eee; margin: 24px 0;">' +
+            '<p style="font-size: 12px; color: #999;">Power Share FlexCo · Berggasse 5 · 1090 Wien<br>' +
+            'FN 688982 i · ATU83693647 · <a href="mailto:hello@power-share.io">hello@power-share.io</a></p>' +
+            '</div>'
+        }
+      );
 
       // Notify team
       if (NOTIFY_EMAIL) {
-        MailApp.sendEmail(
+        GmailApp.sendEmail(
           NOTIFY_EMAIL,
           'Neue Pölla-Anmeldung (ausstehend): ' + (data.name || data.email),
           'Neue PowerShareHome Anmeldung (Bestätigung ausstehend):\n\n' +
@@ -187,7 +205,7 @@ function doPost(e) {
       ]);
 
       if (NOTIFY_EMAIL) {
-        MailApp.sendEmail(
+        GmailApp.sendEmail(
           NOTIFY_EMAIL,
           'New newsletter signup: ' + data.email,
           'New newsletter subscription:\n\n' +
@@ -217,7 +235,7 @@ function doPost(e) {
       ]);
 
       if (NOTIFY_EMAIL && data.email) {
-        MailApp.sendEmail(
+        GmailApp.sendEmail(
           NOTIFY_EMAIL,
           'New Power Share inquiry from ' + (data.name || data.email),
           'New inquiry received:\n\n' +
@@ -276,7 +294,7 @@ function doGet(e) {
 
             // Notify team
             if (NOTIFY_EMAIL) {
-              MailApp.sendEmail(
+              GmailApp.sendEmail(
                 NOTIFY_EMAIL,
                 'Pölla-Anmeldung BESTÄTIGT: ' + (confirmedName || confirmedEmail),
                 'Die Anmeldung wurde per E-Mail bestätigt:\n\n' +
