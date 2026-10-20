@@ -116,6 +116,9 @@ function RegistrationForm() {
   const [wlan, setWlan] = useState('');
   const [acceptContract, setAcceptContract] = useState(false);
   const [acceptPrivacy, setAcceptPrivacy] = useState(false);
+  const [acceptLeistung, setAcceptLeistung] = useState(false);
+  const [acceptDatenschutz, setAcceptDatenschutz] = useState(false);
+  const [acceptEvnServices, setAcceptEvnServices] = useState(false);
   const [status, setStatus] = useState<FormStatus>('idle');
 
   const toggleEquipment = (id: string) => {
@@ -133,7 +136,7 @@ function RegistrationForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!acceptContract || !acceptPrivacy) return;
+    if (!acceptContract || !acceptPrivacy || !acceptLeistung || !acceptDatenschutz) return;
 
     setStatus('submitting');
     try {
@@ -152,6 +155,9 @@ function RegistrationForm() {
           wlan,
           acceptContract,
           acceptPrivacy,
+          acceptLeistung,
+          acceptDatenschutz,
+          acceptEvnServices,
           source: 'poella-landing',
           timestamp: new Date().toISOString(),
         });
@@ -386,14 +392,35 @@ function RegistrationForm() {
           <input
             type="checkbox"
             required
-            checked={acceptPrivacy}
-            onChange={(e) => setAcceptPrivacy(e.target.checked)}
+            checked={acceptLeistung}
+            onChange={(e) => setAcceptLeistung(e.target.checked)}
             className="mt-1 w-5 h-5 rounded border-border text-teal focus:ring-teal accent-teal shrink-0"
           />
           <span className="text-text-secondary text-sm leading-relaxed">
             Ich habe die{' '}
             <a
-              href="/privacy"
+              href="/docs/leistungsbeschreibung.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-teal underline underline-offset-2"
+            >
+              Leistungsbeschreibung
+            </a>{' '}
+            zur Kenntnis genommen. *
+          </span>
+        </label>
+        <label className="flex items-start gap-3 cursor-pointer">
+          <input
+            type="checkbox"
+            required
+            checked={acceptDatenschutz}
+            onChange={(e) => setAcceptDatenschutz(e.target.checked)}
+            className="mt-1 w-5 h-5 rounded border-border text-teal focus:ring-teal accent-teal shrink-0"
+          />
+          <span className="text-text-secondary text-sm leading-relaxed">
+            Ich habe die{' '}
+            <a
+              href="/docs/datenschutzinformation.pdf"
               target="_blank"
               rel="noopener noreferrer"
               className="text-teal underline underline-offset-2"
@@ -401,6 +428,38 @@ function RegistrationForm() {
               Datenschutzinformation
             </a>{' '}
             gelesen. *
+          </span>
+        </label>
+        <label className="flex items-start gap-3 cursor-pointer">
+          <input
+            type="checkbox"
+            required
+            checked={acceptPrivacy}
+            onChange={(e) => setAcceptPrivacy(e.target.checked)}
+            className="mt-1 w-5 h-5 rounded border-border text-teal focus:ring-teal accent-teal shrink-0"
+          />
+          <span className="text-text-secondary text-sm leading-relaxed">
+            Ich stimme der{' '}
+            <a
+              href="/privacy"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-teal underline underline-offset-2"
+            >
+              Datenschutzerklärung der Website
+            </a>{' '}
+            zu. *
+          </span>
+        </label>
+        <label className="flex items-start gap-3 cursor-pointer">
+          <input
+            type="checkbox"
+            checked={acceptEvnServices}
+            onChange={(e) => setAcceptEvnServices(e.target.checked)}
+            className="mt-1 w-5 h-5 rounded border-border text-teal focus:ring-teal accent-teal shrink-0"
+          />
+          <span className="text-text-secondary text-sm leading-relaxed">
+            Ich möchte über Angebote der EVN Energieservices informiert werden. (freiwillig)
           </span>
         </label>
         <div className="bg-bg-secondary border border-border rounded-lg p-4 mt-1">
@@ -423,7 +482,7 @@ function RegistrationForm() {
       {/* Submit */}
       <button
         type="submit"
-        disabled={status === 'submitting' || !acceptContract || !acceptPrivacy}
+        disabled={status === 'submitting' || !acceptContract || !acceptPrivacy || !acceptLeistung || !acceptDatenschutz}
         className="w-full bg-teal text-white font-semibold py-4 rounded-xl hover:bg-teal-dark transition-colors text-lg flex items-center justify-center gap-2 disabled:opacity-50"
       >
         {status === 'submitting' && <Loader2 className="animate-spin" size={20} />}

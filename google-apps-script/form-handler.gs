@@ -61,13 +61,15 @@ function doPost(e) {
       var poellaSheet = ss.getSheetByName('Pölla-Anmeldungen');
       if (!poellaSheet) {
         poellaSheet = ss.insertSheet('Pölla-Anmeldungen');
-        poellaSheet.getRange(1, 1, 1, 17).setValues([[
+        poellaSheet.getRange(1, 1, 1, 20).setValues([[
           'Zeitstempel', 'Name', 'E-Mail', 'Adresse', 'PLZ', 'Ort', 'Telefon',
           'Anlagen', 'PV-Marke', 'Speicher-Marke', 'Wallbox-Marke', 'Wärmepumpe-Marke',
-          'Smart Meter', 'WLAN', 'Vertrag zugestimmt', 'Status', 'Token'
+          'Smart Meter', 'WLAN',
+          'Vertrag', 'Leistungsbeschreibung', 'Datenschutz', 'EVN Services',
+          'Status', 'Token'
         ]]);
         poellaSheet.setFrozenRows(1);
-        poellaSheet.getRange(1, 1, 1, 17).setFontWeight('bold');
+        poellaSheet.getRange(1, 1, 1, 20).setFontWeight('bold');
       }
 
       // Check for duplicate email
@@ -103,6 +105,9 @@ function doPost(e) {
         data.smartMeter || '',
         data.wlan || '',
         data.acceptContract ? 'Ja' : 'Nein',
+        data.acceptLeistung ? 'Ja' : 'Nein',
+        data.acceptDatenschutz ? 'Ja' : 'Nein',
+        data.acceptEvnServices ? 'Ja' : 'Nein',
         'neu',
         ''
       ]);
