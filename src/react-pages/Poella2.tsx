@@ -175,29 +175,13 @@ function RegistrationForm() {
   if (status === 'success') {
     return (
       <div className="text-center py-10">
-        <Mail className="text-teal mx-auto mb-4" size={48} />
+        <CheckCircle className="text-green mx-auto mb-4" size={48} />
         <h3 className="text-xl font-bold text-text-primary mb-2">
-          Fast geschafft!
-        </h3>
-        <p className="text-text-secondary mb-2">
-          Wir haben Ihnen eine Bestätigungs-E-Mail an <strong className="text-text-primary">{email}</strong> gesendet.
-        </p>
-        <p className="text-text-secondary">
-          Bitte klicken Sie auf den Link in der E-Mail, um Ihre Anmeldung abzuschließen.
-        </p>
-      </div>
-    );
-  }
-
-  if (status === 'duplicate') {
-    return (
-      <div className="text-center py-10">
-        <CheckCircle className="text-teal mx-auto mb-4" size={48} />
-        <h3 className="text-xl font-bold text-text-primary mb-2">
-          Bereits angemeldet
+          Anmeldung erfolgreich!
         </h3>
         <p className="text-text-secondary">
-          Diese E-Mail-Adresse ist bereits registriert. Prüfen Sie Ihren Posteingang für die Bestätigungs-E-Mail.
+          Vielen Dank für Ihre Anmeldung zum Projekt PowerShareHome.
+          Wir werden uns in Kürze bei Ihnen melden.
         </p>
       </div>
     );
