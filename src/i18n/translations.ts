@@ -68,12 +68,7 @@ export const translations: Record<'en' | 'de', Record<string, string>> = {
       'Your flexibility is pooled with your community. Revenue from grid services flows back to you \u2014 tracked daily in the app.',
     'howItWorks.cta': 'See it in action',
 
-    // Stats
-    'stats.homes': 'Homes Connected',
-    'stats.setupTime': 'Setup Time',
-    'stats.shared': 'Shared Today',
-    'stats.co2': 'CO\u2082 Avoided',
-    'stats.earnings': 'Community Earnings',
+    // Stats (USPs)
 
     // Community
     'community.title': 'Built for energy communities',
@@ -137,10 +132,14 @@ export const translations: Record<'en' | 'de', Record<string, string>> = {
       'Built on open standards (IEC, Zigbee). No vendor lock-in, no walled gardens.',
 
     // Aliases for component key patterns
-    'stats.homesConnected': 'Homes Connected',
-    'stats.sharedToday': 'Shared Today',
-    'stats.co2Avoided': 'CO₂ Avoided',
-    'stats.communityEarnings': 'Community Earnings',
+    'stats.local.title': '100% Local',
+    'stats.local.desc': 'Energy from your neighbourhood',
+    'stats.fast.title': 'Ready in 15 min',
+    'stats.fast.desc': 'Quick and easy setup',
+    'stats.smart.title': 'Auto-optimised',
+    'stats.smart.desc': 'AI-powered distribution',
+    'stats.transparent.title': 'Transparent',
+    'stats.transparent.desc': 'Real-time usage overview',
     'utilities.cap1.title': '24h Rolling Forecasts',
     'utilities.cap1.desc': 'Asset-level and portfolio-level flexibility forecasts, continuously updated with weather and load pattern data.',
     'utilities.cap2.title': 'Autonomous Dispatch',
@@ -272,12 +271,7 @@ export const translations: Record<'en' | 'de', Record<string, string>> = {
       'Deine Flexibilit\u00e4t wird mit deiner Gemeinschaft geb\u00fcndelt. Erl\u00f6se aus Netzdienstleistungen flie\u00dfen direkt an dich zur\u00fcck \u2014 t\u00e4glich in der App nachverfolgbar.',
     'howItWorks.cta': 'In Aktion sehen',
 
-    // Stats
-    'stats.homes': 'Verbundene Haushalte',
-    'stats.setupTime': 'Einrichtungszeit',
-    'stats.shared': 'Heute geteilt',
-    'stats.co2': 'CO\u2082 vermieden',
-    'stats.earnings': 'Gemeinschaftserl\u00f6se',
+    // Stats (USPs)
 
     // Community
     'community.title': 'F\u00fcr Energiegemeinschaften gebaut',
@@ -341,10 +335,14 @@ export const translations: Record<'en' | 'de', Record<string, string>> = {
       'Gebaut auf offenen Standards (IEC, Zigbee). Kein Vendor Lock-in, keine geschlossenen Systeme.',
 
     // Aliases for component key patterns
-    'stats.homesConnected': 'Verbundene Haushalte',
-    'stats.sharedToday': 'Heute geteilt',
-    'stats.co2Avoided': 'CO₂ vermieden',
-    'stats.communityEarnings': 'Gemeinschaftserlöse',
+    'stats.local.title': '100% Lokal',
+    'stats.local.desc': 'Energie aus der Nachbarschaft',
+    'stats.fast.title': 'In 15 min startklar',
+    'stats.fast.desc': 'Schnell und einfach eingerichtet',
+    'stats.smart.title': 'Automatisch optimiert',
+    'stats.smart.desc': 'KI-gesteuerte Verteilung',
+    'stats.transparent.title': 'Transparent',
+    'stats.transparent.desc': 'Echtzeit-Überblick über Verbrauch',
     'utilities.cap1.title': '24h rollierende Prognosen',
     'utilities.cap1.desc': 'Flexibilitätsprognosen auf Asset- und Portfolioebene, laufend aktualisiert mit Wetter- und Lastprofildaten.',
     'utilities.cap2.title': 'Autonomer Dispatch',
