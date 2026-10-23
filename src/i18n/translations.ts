@@ -14,7 +14,7 @@ export const translations: Record<'en' | 'de', Record<string, string>> = {
     'hero.titleHighlight': 'energy',
     'hero.title2': 'Share the savings.',
     'hero.subtitle':
-      'Power Share connects your solar panels, battery, and heat pump to your neighborhood. Together, you use more of what you generate \u2014 and earn from the flexibility you share.',
+      'Power Share connects your solar panels, battery, and wallbox to your neighborhood. Together, you use more of what you generate \u2014 and earn from the flexibility you share.',
     'hero.cta1': 'Join your community',
     'hero.cta2': 'See how it works',
     'hero.dashboard.yourHome': 'Your Home',
@@ -35,7 +35,7 @@ export const translations: Record<'en' | 'de', Record<string, string>> = {
       'Real-time visualization of what your home generates, stores, and shares. No jargon, no hidden complexity.',
     'pillars.share.title': 'Share Flexibility',
     'pillars.share.desc':
-      'Your battery, heat pump, and EV charger are assets. Offer their flexibility to the grid and earn from it.',
+      'Your battery, wallbox, and EV charger are assets. Offer their flexibility to the grid and earn from it.',
     'pillars.together.title': 'Stronger Together',
     'pillars.together.desc':
       "Energy communities pool resources. When your neighbor's solar peaks while your battery has room, everyone benefits.",
@@ -59,7 +59,7 @@ export const translations: Record<'en' | 'de', Record<string, string>> = {
       'No electrician needed. No Wi-Fi dependency. Just plug in and go.',
     'howItWorks.step1.title': 'Pair your devices',
     'howItWorks.step1.desc':
-      'Plug in the Power Share gateway. It connects to your solar inverter, battery, and heat pump over Zigbee \u2014 no Wi-Fi needed.',
+      'Plug in the Power Share gateway. It connects to your solar inverter, battery, and wallbox over Zigbee \u2014 no Wi-Fi needed.',
     'howItWorks.step2.title': 'Watch your energy flow',
     'howItWorks.step2.desc':
       "Open the app and see your home's energy story in real time. Generation, storage, consumption \u2014 all in one clear dashboard.",
@@ -96,7 +96,7 @@ export const translations: Record<'en' | 'de', Record<string, string>> = {
       'Every dispatch confirmed at asset level. Continuous comparison of actual state against bid commitments.',
     'utilities.fleet.title': 'Fleet Management',
     'utilities.fleet.desc':
-      'Mixed portfolios of PV, batteries, heat pumps, and EV chargers \u2014 managed as one coherent fleet.',
+      'Mixed portfolios of PV, batteries, wallboxes, and EV chargers \u2014 managed as one coherent fleet.',
     'utilities.cta': 'Schedule a technical demo',
 
     // CTA
@@ -147,7 +147,7 @@ export const translations: Record<'en' | 'de', Record<string, string>> = {
     'utilities.cap3.title': 'Real-Time Confirmation',
     'utilities.cap3.desc': 'Every dispatch confirmed at asset level. Continuous comparison of actual state against bid commitments.',
     'utilities.cap4.title': 'Fleet Management',
-    'utilities.cap4.desc': 'Mixed portfolios of PV, batteries, heat pumps, and EV chargers — managed as one coherent fleet.',
+    'utilities.cap4.desc': 'Mixed portfolios of PV, batteries, wallboxes, and EV chargers — managed as one coherent fleet.',
     'about.subtitle': 'We believe the energy transition happens at home. Power Share FlexCo builds the infrastructure that turns every household into an active participant — visible, connected, and fairly compensated.',
     'about.value1.title': 'Your data, your control',
     'about.value1.desc': 'Transparent, auditable energy data. You decide what is shared, with whom, and on what terms.',
@@ -216,7 +216,7 @@ export const translations: Record<'en' | 'de', Record<string, string>> = {
     'hero.titleHighlight': 'Energie',
     'hero.title2': 'Sichtbar. Geteilt. Wertvoll.',
     'hero.subtitle':
-      'Power Share verbindet deine Solaranlage, deinen Speicher und deine W\u00e4rmepumpe mit deiner Nachbarschaft. Gemeinsam nutzt ihr mehr von dem, was ihr erzeugt \u2014 und verdient an der Flexibilit\u00e4t, die ihr teilt.',
+      'Power Share verbindet deine Solaranlage, deinen Speicher und deine Wallbox mit deiner Nachbarschaft. Gemeinsam nutzt ihr mehr von dem, was ihr erzeugt \u2014 und verdient an der Flexibilit\u00e4t, die ihr teilt.',
     'hero.cta1': 'Gemeinschaft beitreten',
     'hero.cta2': 'So funktioniert\u2019s',
     'hero.dashboard.yourHome': 'Dein Zuhause',
@@ -237,7 +237,7 @@ export const translations: Record<'en' | 'de', Record<string, string>> = {
       'Echtzeit-Visualisierung, was dein Zuhause erzeugt, speichert und teilt. Kein Fachjargon, keine versteckte Komplexit\u00e4t.',
     'pillars.share.title': 'Flexibilit\u00e4t teilen',
     'pillars.share.desc':
-      'Dein Speicher, deine W\u00e4rmepumpe und deine Wallbox sind wertvolle Assets. Biete ihre Flexibilit\u00e4t dem Netz an und verdiene damit.',
+      'Dein Speicher, deine Wallbox und dein E-Auto sind wertvolle Assets. Biete ihre Flexibilit\u00e4t dem Netz an und verdiene damit.',
     'pillars.together.title': 'Gemeinsam st\u00e4rker',
     'pillars.together.desc':
       'Energiegemeinschaften b\u00fcndeln Ressourcen. Wenn die Solaranlage deines Nachbarn Spitzen liefert und dein Speicher noch Platz hat, profitieren alle.',
@@ -262,7 +262,7 @@ export const translations: Record<'en' | 'de', Record<string, string>> = {
       'Kein Elektriker n\u00f6tig. Keine WLAN-Abh\u00e4ngigkeit. Einfach einstecken und los.',
     'howItWorks.step1.title': 'Ger\u00e4te verbinden',
     'howItWorks.step1.desc':
-      'Schlie\u00df das Power Share Gateway an. Es verbindet sich \u00fcber Zigbee mit deinem Wechselrichter, Speicher und deiner W\u00e4rmepumpe \u2014 ganz ohne WLAN.',
+      'Schlie\u00df das Power Share Gateway an. Es verbindet sich \u00fcber Zigbee mit deinem Wechselrichter, Speicher und deiner Wallbox \u2014 ganz ohne WLAN.',
     'howItWorks.step2.title': 'Energiefluss beobachten',
     'howItWorks.step2.desc':
       '\u00d6ffne die App und sieh die Energiegeschichte deines Zuhauses in Echtzeit. Erzeugung, Speicherung, Verbrauch \u2014 alles in einem \u00fcbersichtlichen Dashboard.',
@@ -350,7 +350,7 @@ export const translations: Record<'en' | 'de', Record<string, string>> = {
     'utilities.cap3.title': 'Echtzeit-Bestätigung',
     'utilities.cap3.desc': 'Jeder Dispatch wird auf Asset-Ebene bestätigt. Kontinuierlicher Abgleich des Ist-Zustands mit den Gebotsverpflichtungen.',
     'utilities.cap4.title': 'Flottenmanagement',
-    'utilities.cap4.desc': 'Gemischte Portfolios aus PV, Speichern, Wärmepumpen und Wallboxen — verwaltet als eine kohärente Flotte.',
+    'utilities.cap4.desc': 'Gemischte Portfolios aus PV, Speichern, Wallboxen und E-Ladestationen — verwaltet als eine kohärente Flotte.',
     'about.subtitle': 'Wir glauben, dass die Energiewende zu Hause beginnt. Power Share FlexCo baut die Infrastruktur, die jeden Haushalt zum aktiven Teilnehmer macht — sichtbar, vernetzt und fair vergütet.',
     'about.value1.title': 'Deine Daten, deine Kontrolle',
     'about.value1.desc': 'Transparente, prüfbare Energiedaten. Du entscheidest, was geteilt wird, mit wem und zu welchen Bedingungen.',

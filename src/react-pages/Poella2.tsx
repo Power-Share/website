@@ -90,7 +90,6 @@ const equipmentOptions = [
   { id: 'pv', label: 'PV-Anlage' },
   { id: 'battery', label: 'Batteriespeicher' },
   { id: 'wallbox', label: 'Wallbox / E-Auto-Ladestation' },
-  { id: 'heatpump', label: 'Wärmepumpe' },
   { id: 'smartplug', label: 'Smarte Steckdosen' },
 ] as const;
 
@@ -98,7 +97,6 @@ const brandOptions: Record<string, string[]> = {
   pv: ['Fronius', 'Huawei', 'SMA', 'Kostal', 'GoodWe', 'Solaredge', 'Enphase', 'Victron', 'Solinteg', 'Andere', 'Weiß ich nicht'],
   battery: ['BYD', 'Huawei LUNA2000', 'Tesla Powerwall', 'sonnen', 'Fronius / BYD', 'Marstek', 'CATL', 'Pylontech', 'Andere', 'Weiß ich nicht'],
   wallbox: ['go-e', 'KEBA', 'Fronius Wattpilot', 'Easee', 'ABL', 'Webasto', 'Juice Technology', 'Andere', 'Weiß ich nicht'],
-  heatpump: ['Vaillant', 'Viessmann', 'Daikin', 'Mitsubishi', 'Panasonic', 'Bosch', 'Wolf', 'Nibe', 'Andere', 'Weiß ich nicht'],
 };
 
 type FormStatus = 'idle' | 'submitting' | 'success' | 'duplicate' | 'error';

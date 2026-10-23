@@ -24,7 +24,7 @@ const testimonials = [
     name: 'Sarah B.',
     location: 'Linz, Urfahr',
     quote:
-      "Our whole street is on Power Share now. We've become an actual energy community \u2014 sharing surplus solar in summer and coordinating heat pumps in winter.",
+      "Our whole street is on Power Share now. We've become an actual energy community \u2014 sharing surplus solar in summer and smart-charging EVs together in winter.",
     color: 'bg-coral',
   },
 ];
