@@ -190,6 +190,10 @@ const partnerLogos = [
   "E-Control",
   "GridX",
   "Verbund",
+  "EVN",
+  "Energie Zukunft Niederösterreich (EZN)",
+  "egon",
+  "cybergrid",
 ];
 
 export function HeroSection() {
