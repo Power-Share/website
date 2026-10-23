@@ -186,10 +186,6 @@ function DashboardPreview() {
 
 
 const partnerLogos = [
-  "Wien Energie",
-  "E-Control",
-  "GridX",
-  "Verbund",
   "EVN",
   "Energie Zukunft Niederösterreich (EZN)",
   "egon",
