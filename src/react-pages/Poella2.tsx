@@ -480,23 +480,43 @@ function RegistrationForm() {
 }
 
 function ConfirmationBanner() {
-  const [confirmed, setConfirmed] = useState<string | null>(null);
+  const [status, setStatus] = useState<'idle' | 'confirming' | 'confirmed' | 'already' | 'invalid'>(
+    'idle',
+  );
 
   useState(() => {
-    if (typeof window !== 'undefined') {
-      const params = new URLSearchParams(window.location.search);
-      const c = params.get('confirmed');
-      if (c) {
-        setConfirmed(c);
-        // Clean URL without reload
-        window.history.replaceState({}, '', window.location.pathname);
-      }
-    }
+    if (typeof window === 'undefined') return;
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get('confirm_token');
+    if (!token) return;
+
+    // Clean URL immediately
+    window.history.replaceState({}, '', window.location.pathname);
+    setStatus('confirming');
+
+    // Call Apps Script to confirm the token
+    fetch(FORM_ENDPOINT + '?action=confirm&token=' + encodeURIComponent(token))
+      .then((r) => r.json())
+      .then((data: { status: string }) => {
+        if (data.status === 'confirmed') setStatus('confirmed');
+        else if (data.status === 'already') setStatus('already');
+        else setStatus('invalid');
+      })
+      .catch(() => setStatus('invalid'));
   });
 
-  if (!confirmed) return null;
+  if (status === 'idle') return null;
 
-  if (confirmed === '1') {
+  if (status === 'confirming') {
+    return (
+      <div className="bg-teal/10 border border-teal/30 rounded-xl p-6 text-center max-w-2xl mx-auto mb-8">
+        <Loader2 className="text-teal mx-auto mb-3 animate-spin" size={40} />
+        <h3 className="text-lg font-bold text-text-primary mb-1">Bestätigung läuft…</h3>
+      </div>
+    );
+  }
+
+  if (status === 'confirmed') {
     return (
       <div className="bg-green/10 border border-green/30 rounded-xl p-6 text-center max-w-2xl mx-auto mb-8">
         <CheckCircle className="text-green mx-auto mb-3" size={40} />
@@ -509,7 +529,7 @@ function ConfirmationBanner() {
     );
   }
 
-  if (confirmed === 'already') {
+  if (status === 'already') {
     return (
       <div className="bg-teal/10 border border-teal/30 rounded-xl p-6 text-center max-w-2xl mx-auto mb-8">
         <CheckCircle className="text-teal mx-auto mb-3" size={40} />
