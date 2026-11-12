@@ -363,7 +363,7 @@ export function Poella() {
                 <div className="bg-bg-surface rounded-xl p-5 border border-border">
                   <p className="font-semibold text-text-primary mb-1">Verlosung</p>
                   <p className="text-text-secondary text-sm">
-                    Unter allen Anmeldungen bis 30.11.2026 werden{' '}
+                    Unter allen Anmeldungen werden{' '}
                     <strong className="text-text-primary">zwei Heimspeicher mit 5 kWh</strong>{' '}
                     Kapazität verlost.
                   </p>
