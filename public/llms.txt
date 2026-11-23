@@ -1,0 +1,45 @@
+# Power Share FlexCo
+
+> A consumer-first platform for energy communities, flexibility, and behind-the-meter optimization.
+
+Power Share FlexCo builds the infrastructure that turns every household into an active participant in the energy transition — visible, connected, and fairly compensated.
+
+## What We Do
+
+PowerShareHome is a decentralized home energy management and community platform. It enables households to:
+
+- **See** real-time solar production, battery status, and energy consumption on a live dashboard
+- **Share** surplus renewable energy with neighbors through energy communities (Energiegemeinschaften)
+- **Earn** fair compensation for flexibility services and shared energy
+
+## Key Capabilities
+
+- Real-time energy monitoring and analytics
+- Energy community management and peer comparison
+- Utility-grade flexibility dispatch (95%+ forecast accuracy)
+- Multi-asset portfolio management (battery storage, heat pumps, EVs, smart plugs)
+- Behind-the-meter optimization
+
+## Supported Devices & Protocols
+
+- Inverters (Fronius Solar API, Modbus TCP / SunSpec)
+- Battery storage systems
+- EV wallboxes (OCPP)
+- Smart plugs and appliances (Zigbee)
+
+## Company
+
+- **Legal name:** Power Share FlexCo
+- **Address:** Berggasse 5, 1090 Vienna, Austria
+- **Commercial register:** FN 688982 i, Handelsgericht Wien
+- **UID:** ATU83693647
+- **Contact:** hello@power-share.io
+- **Website:** https://power-share.io
+
+## Pages
+
+- [Home](https://power-share.io/)
+- [Supported Devices](https://power-share.io/geraete)
+- [Imprint](https://power-share.io/imprint)
+- [Privacy Policy](https://power-share.io/privacy)
+- [Terms of Service](https://power-share.io/terms)
